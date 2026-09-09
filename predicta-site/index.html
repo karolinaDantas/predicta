@@ -10,19 +10,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-950:#050f18;
-    --navy-900:#0a1f2e;
-    --navy-850:#0e2739;
-    --navy-800:#123249;
-    --navy-700:#16527d;
-    --navy-600:#1c6796;
-    --cyan-400:#11dceb;
-    --cyan-300:#6eeffa;
-    --cyan-200:#b8f6fb;
-    --ice-100:#eaf6f8;
-    --amber:#ffb020;
-    --line:rgba(184,246,251,0.12);
-    --shadow:0 20px 60px rgba(2,10,16,0.45);
+    --void:#04090d;
+    --deep:#081620;
+    --panel:#0b1c29;
+    --panel-2:#0f2436;
+    --panel-3:#13304a;
+    --wire:#1f4c68;
+    --signal:#16e3c6;
+    --signal-soft:#8bf3e2;
+    --signal-dim:rgba(22,227,198,0.14);
+    --alert:#ff8f42;
+    --alert-dim:rgba(255,143,66,0.15);
+    --paper:#e7f6f2;
+    --paper-dim:rgba(231,246,242,0.66);
+    --line:rgba(139,243,226,0.12);
+    --shadow:0 24px 70px rgba(2,10,14,0.5);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -32,38 +34,55 @@
   }
   body{
     margin:0;
-    background:var(--navy-900);
-    color:var(--ice-100);
+    background:var(--void);
+    color:var(--paper);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    position:relative;
   }
-  h1,h2,h3,.display{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    margin:0;
-  }
+  h1,h2,h3,.display{ font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.01em; margin:0; }
   .mono{font-family:'JetBrains Mono',monospace;}
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
-  :focus-visible{outline:2px solid var(--cyan-400); outline-offset:3px; border-radius:4px;}
+  :focus-visible{outline:2px solid var(--signal); outline-offset:3px; border-radius:4px;}
   .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
   section{position:relative;}
+  button{font-family:inherit;}
+
+  /* ---------- scrollbar ---------- */
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:var(--void);}
+  ::-webkit-scrollbar-thumb{background:var(--panel-3); border-radius:6px; border:2px solid var(--void);}
+  ::-webkit-scrollbar-thumb:hover{background:var(--wire);}
+  html{scrollbar-color:var(--panel-3) var(--void); scrollbar-width:thin;}
+
+  /* ---------- ambient blueprint grid ---------- */
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:radial-gradient(ellipse 900px 700px at 70% 0%, black 10%, transparent 72%);
+    animation:driftGrid 90s linear infinite;
+  }
+  @keyframes driftGrid{ to{ background-position:640px 640px; } }
+
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
-    font-size:12.5px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--cyan-400);
-    display:flex;align-items:center;gap:10px;
+    font-size:13px;
+    color:var(--signal);
+    display:inline-flex;align-items:center;gap:8px;
   }
-  .eyebrow::before{content:"";width:22px;height:1px;background:var(--cyan-400);display:inline-block;}
+  .eyebrow::before{content:"›"; font-weight:700; color:var(--signal);}
 
-  /* ---------- HEADER ---------- */
+  /* ---------- HEADER + TICKER ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(6,16,24,0.72);
+    background:rgba(6,14,20,0.78);
     backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
@@ -74,184 +93,202 @@
   .brand{display:flex;align-items:center;gap:11px;}
   .brand img{width:34px;height:34px;}
   .brand span{font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:0.01em;}
-  .brand span em{font-style:normal;color:var(--cyan-400);}
-  .nav-links{display:flex;gap:34px;font-size:14.5px;font-weight:500;color:var(--cyan-200);}
-  .nav-links a{opacity:0.85;transition:opacity .2s;}
-  .nav-links a:hover{opacity:1;}
+  .brand span em{font-style:normal;color:var(--signal);}
+  .nav-links{display:flex;gap:34px;font-size:14.5px;font-weight:500;color:var(--paper-dim);}
+  .nav-links a{transition:color .2s;}
+  .nav-links a:hover{color:var(--signal-soft);}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
     padding:11px 22px;border-radius:8px;
     font-weight:600;font-size:14px;
     border:1px solid transparent;
-    cursor:pointer;transition:transform .15s ease, box-shadow .15s ease, background .2s;
+    cursor:pointer;transition:transform .15s ease, box-shadow .15s ease, background .2s, border-color .2s, opacity .2s;
+    background:none;
   }
-  .btn-primary{background:var(--cyan-400);color:var(--navy-950);}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(17,220,235,0.28);}
-  .btn-ghost{border-color:rgba(184,246,251,0.3); color:var(--ice-100);}
-  .btn-ghost:hover{border-color:var(--cyan-400); color:var(--cyan-300);}
+  .btn-primary{background:var(--signal);color:var(--void);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(22,227,198,0.28);}
+  .btn-ghost{border-color:rgba(139,243,226,0.3); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--signal); color:var(--signal-soft);}
+  .btn-sm{padding:8px 14px; font-size:12.5px;}
+  .btn:disabled{opacity:0.45; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
   .nav .btn{padding:9px 18px;font-size:13.5px;}
+
+  .ticker-bar{overflow:hidden; border-top:1px solid var(--line);}
+  .ticker-mask{-webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);}
+  .ticker-track{display:flex; width:max-content; gap:46px; padding:8px 0; animation:tickerScroll 26s linear infinite;}
+  .ticker-bar:hover .ticker-track{animation-play-state:paused;}
+  @keyframes tickerScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .ticker-item{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--paper-dim); white-space:nowrap; display:flex; gap:7px; align-items:center;}
+  .ticker-item b{color:var(--signal-soft); font-weight:600;}
+  .ticker-item .sep{color:var(--wire);}
 
   /* ---------- HERO ---------- */
   .hero{
-    padding:168px 0 110px;
+    padding:198px 0 108px;
     background:
-      radial-gradient(ellipse 900px 500px at 82% 8%, rgba(17,220,235,0.14), transparent 60%),
-      radial-gradient(ellipse 700px 500px at -5% 90%, rgba(22,82,125,0.5), transparent 60%),
-      var(--navy-900);
+      radial-gradient(ellipse 900px 520px at var(--mx,82%) var(--my,8%), rgba(22,227,198,0.13), transparent 60%),
+      radial-gradient(ellipse 700px 500px at -5% 90%, rgba(19,48,74,0.55), transparent 60%),
+      var(--deep);
     overflow:hidden;
   }
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center; position:relative; z-index:1;}
   .hero h1{font-size:clamp(34px,4.6vw,54px); line-height:1.08; margin:18px 0 22px;}
-  .hero h1 .accent{color:var(--cyan-400);}
-  .hero p.lead{font-size:17px; line-height:1.65; color:var(--cyan-200); opacity:0.85; max-width:480px; margin-bottom:34px;}
-  .hero-ctas{display:flex; gap:14px; margin-bottom:46px;}
+  .hero h1 .accent{color:var(--signal);}
+  .hero p.lead{font-size:17px; line-height:1.65; color:var(--paper-dim); max-width:480px; margin-bottom:34px;}
+  .hero-ctas{display:flex; gap:14px; margin-bottom:46px; flex-wrap:wrap;}
   .hero-stats{display:flex; gap:36px;}
   .hero-stats div{border-left:1px solid var(--line); padding-left:14px;}
-  .hero-stats .num{font-family:'Space Grotesk'; font-size:24px; font-weight:700; color:var(--cyan-300);}
-  .hero-stats .lbl{font-size:12.5px; color:var(--cyan-200); opacity:0.7;}
+  .hero-stats .num{font-family:'Space Grotesk'; font-size:24px; font-weight:700; color:var(--signal-soft);}
+  .hero-stats .lbl{font-size:12.5px; color:var(--paper-dim);}
 
-  .hero-visual{position:relative; height:420px;}
-  .hero-visual svg{position:absolute; inset:0; width:100%; height:100%;}
-  .pulse-line{
-    fill:none; stroke:var(--cyan-400); stroke-width:2.5;
-    stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray:900; stroke-dashoffset:900;
-    animation:draw 2.4s cubic-bezier(.4,0,.2,1) forwards;
-    filter:drop-shadow(0 0 10px rgba(17,220,235,0.55));
-  }
-  .pulse-line.dim{stroke:var(--navy-600); opacity:0.5; filter:none; animation-delay:.1s;}
-  @keyframes draw{to{stroke-dashoffset:0;}}
-  .chip{
-    position:absolute; background:rgba(14,39,57,0.9); border:1px solid var(--line);
-    border-radius:10px; padding:9px 13px; font-family:'JetBrains Mono'; font-size:12px;
-    box-shadow:var(--shadow); opacity:0; animation:chipIn .6s ease forwards;
-    backdrop-filter:blur(6px);
-  }
-  .chip .v{color:var(--cyan-300); font-weight:600; font-size:14px;}
-  .chip .l{opacity:0.65; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;}
-  @keyframes chipIn{to{opacity:1;}}
-  .chip1{top:8%; left:2%; animation-delay:1.8s;}
-  .chip2{top:56%; left:56%; animation-delay:2.1s;}
-  .chip3{top:78%; left:4%; animation-delay:2.4s;}
+  .hero-visual{position:relative; height:400px;}
+  .schematic{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .wire{fill:none; stroke:var(--wire); stroke-width:2; stroke-linecap:round; stroke-dasharray:5 9;}
+  .wire.flow{animation:flow 2.6s linear infinite;}
+  .wire.flow.d2{animation-delay:-0.6s;}
+  .wire.flow.d3{animation-delay:-1.2s;}
+  .wire.flow.d4{animation-delay:-1.8s;}
+  @keyframes flow{to{stroke-dashoffset:-140;}}
+
+  .node-ring{fill:none; stroke:var(--signal); stroke-width:1.6; opacity:0.6; transform-box:fill-box; transform-origin:center; animation:ringPulse 3.4s ease-out infinite;}
+  .node-dot{fill:var(--signal-soft);}
+  .node.n2 .node-ring{animation-delay:.7s;}
+  .node.n3 .node-ring{animation-delay:1.4s;}
+  .node.n4 .node-ring{animation-delay:2.1s;}
+  @keyframes ringPulse{0%{opacity:.55; transform:scale(1);} 75%{opacity:0; transform:scale(2.3);} 100%{opacity:0; transform:scale(2.3);}}
+  .node-label{font-family:'JetBrains Mono'; font-size:9.5px; fill:var(--paper-dim); letter-spacing:.02em;}
+
+  .chip-box{fill:var(--panel-2); stroke:var(--wire); stroke-width:1.4;}
+  .chip-title{font-family:'JetBrains Mono'; font-size:10px; fill:var(--signal-soft); letter-spacing:.06em;}
+  .chip-sub{font-family:'JetBrains Mono'; font-size:8px; fill:var(--paper-dim);}
+  .scope-bg{fill:rgba(4,9,13,0.6);}
+  .scope-wave{stroke:var(--signal); stroke-width:1.3; fill:none; opacity:.85;}
+  .scope-sweep{fill:var(--signal-dim); animation:sweep 2.4s linear infinite;}
+  @keyframes sweep{0%{transform:translateX(0);} 100%{transform:translateX(64px);}}
+
+  .alert-ring{fill:none; stroke:var(--alert); stroke-width:1.6; opacity:.5; transform-box:fill-box; transform-origin:center; animation:ringPulse 4s ease-out infinite; animation-delay:1s;}
+  .alert-bell{fill:var(--alert); opacity:.85;}
+  #node-alert.armed .alert-ring{stroke:var(--alert); animation:alertFlash .5s ease-in-out 4;}
+  #node-alert.armed .alert-bell{fill:var(--alert); filter:drop-shadow(0 0 6px rgba(255,143,66,0.8));}
+  @keyframes alertFlash{0%,100%{opacity:.4; transform:scale(1);} 50%{opacity:1; transform:scale(1.35);}}
 
   /* ---------- SECTION HEADS ---------- */
-  .sec-head{max-width:640px; margin-bottom:56px;}
+  .sec-head{max-width:640px; margin-bottom:56px; position:relative; z-index:1;}
   .sec-head h2{font-size:clamp(26px,3.2vw,36px); margin-top:14px; line-height:1.18;}
-  .sec-head p{color:var(--cyan-200); opacity:0.8; font-size:15.5px; line-height:1.6; margin-top:14px;}
-  section.pad{padding:104px 0;}
+  .sec-head p{color:var(--paper-dim); font-size:15.5px; line-height:1.6; margin-top:14px;}
+  section.pad{padding:104px 0; position:relative;}
   .divider{height:1px; background:var(--line); max-width:1180px; margin:0 auto;}
 
   /* ---------- PROBLEMA/SOLUÇÃO ---------- */
-  .ps-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
-  .ps-card{
-    background:var(--navy-850); border:1px solid var(--line); border-radius:16px; padding:34px;
-  }
-  .ps-card.solucao{border-color:rgba(17,220,235,0.35); background:linear-gradient(165deg, rgba(17,220,235,0.07), var(--navy-850) 45%);}
+  .ps-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px; position:relative; z-index:1;}
+  .ps-card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:34px;}
+  .ps-card.solucao{border-color:rgba(22,227,198,0.35); background:linear-gradient(165deg, rgba(22,227,198,0.07), var(--panel) 45%);}
   .ps-card h3{font-size:19px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
   .dot.red{background:#ff6b6b; box-shadow:0 0 10px rgba(255,107,107,0.6);}
-  .dot.cyan{background:var(--cyan-400); box-shadow:0 0 10px rgba(17,220,235,0.6);}
+  .dot.cyan{background:var(--signal); box-shadow:0 0 10px rgba(22,227,198,0.6);}
   .ps-card ul{margin:0;padding:0;list-style:none;}
-  .ps-card li{
-    padding:12px 0; border-top:1px solid var(--line); font-size:14.5px; line-height:1.55; color:var(--ice-100); opacity:0.9;
-    display:flex; gap:10px;
-  }
+  .ps-card li{padding:12px 0; border-top:1px solid var(--line); font-size:14.5px; line-height:1.55; color:var(--paper); opacity:0.92; display:flex; gap:10px;}
   .ps-card li:first-child{border-top:none;}
   .ps-card li::before{content:"—"; opacity:0.4; flex-shrink:0;}
 
   /* ---------- PRODUTO ---------- */
-  .product{background:var(--navy-950);}
-  .product-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:70px; align-items:center;}
+  .product{background:var(--void);}
+  .product-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:70px; align-items:center; position:relative; z-index:1;}
   .board-wrap{position:relative;}
   .board-wrap svg{width:100%; height:auto;}
+  .pin-line{stroke:var(--wire); stroke-width:1.5; transition:stroke .25s, stroke-width .25s;}
+  .pin-dot{fill:var(--wire); transition:fill .25s, r .25s;}
+  .pin-label{font-family:'JetBrains Mono'; font-size:9px; fill:var(--paper-dim); opacity:0.65; transition:fill .25s, opacity .25s;}
+  .pin.active .pin-line{stroke:var(--signal); stroke-width:2.2;}
+  .pin.active .pin-dot{fill:var(--signal-soft); r:5;}
+  .pin.active .pin-label{fill:var(--signal-soft); opacity:1;}
+  .cpu-glow{animation:cpuGlow 2.8s ease-in-out infinite;}
+  @keyframes cpuGlow{0%,100%{opacity:.75;} 50%{opacity:.35;}}
+
   .sensor-specs{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-  .spec-card{
-    background:var(--navy-850); border:1px solid var(--line); border-radius:12px; padding:20px;
-    transition:border-color .2s, transform .2s;
-  }
-  .spec-card:hover{border-color:rgba(17,220,235,0.4); transform:translateY(-3px);}
-  .spec-card .tag{font-family:'JetBrains Mono'; font-size:11px; color:var(--cyan-400); letter-spacing:.08em; text-transform:uppercase;}
+  .spec-card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; transition:border-color .2s, transform .2s, background .25s; cursor:default;}
+  .spec-card:hover, .spec-card:focus-within{border-color:rgba(22,227,198,0.45); transform:translateY(-3px); background:linear-gradient(165deg, rgba(22,227,198,0.06), var(--panel) 60%);}
+  .spec-card .tag{font-family:'JetBrains Mono'; font-size:11px; color:var(--signal);}
   .spec-card h4{font-family:'Space Grotesk'; font-size:16px; margin:8px 0 6px;}
-  .spec-card p{font-size:13px; color:var(--cyan-200); opacity:0.75; line-height:1.5; margin:0;}
+  .spec-card p{font-size:13px; color:var(--paper-dim); line-height:1.5; margin:0;}
   .spec-card.wide{grid-column:1 / -1;}
 
   /* ---------- COMO FUNCIONA ---------- */
-  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:0; counter-reset:step;}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; z-index:1;}
   .step{position:relative; padding:0 22px 0 0;}
   .step:not(:last-child)::after{
     content:""; position:absolute; top:22px; right:0; width:22px; height:1px;
-    background:repeating-linear-gradient(90deg, var(--cyan-400) 0 4px, transparent 4px 8px);
+    background:repeating-linear-gradient(90deg, var(--signal) 0 4px, transparent 4px 8px);
   }
-  .step-num{
-    font-family:'JetBrains Mono'; font-size:13px; color:var(--navy-950); background:var(--cyan-400);
-    width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-    font-weight:600; margin-bottom:18px;
-  }
+  .step-num{font-family:'JetBrains Mono'; font-size:13px; color:var(--void); background:var(--signal); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:600; margin-bottom:18px;}
   .step h4{font-family:'Space Grotesk'; font-size:16.5px; margin-bottom:9px;}
-  .step p{font-size:13.5px; color:var(--cyan-200); opacity:0.78; line-height:1.55;}
+  .step p{font-size:13.5px; color:var(--paper-dim); line-height:1.55;}
 
-  /* ---------- PAINEL AO VIVO (signature) ---------- */
-  .panel-sec{background:radial-gradient(ellipse 900px 500px at 50% 0%, rgba(17,220,235,0.08), transparent 60%), var(--navy-950);}
-  .dashboard{
-    background:linear-gradient(180deg, var(--navy-850), var(--navy-900));
-    border:1px solid var(--line); border-radius:20px; padding:28px;
-    box-shadow:var(--shadow);
-  }
+  /* ---------- PAINEL AO VIVO ---------- */
+  .panel-sec{background:radial-gradient(ellipse 900px 500px at 50% 0%, rgba(22,227,198,0.08), transparent 60%), var(--void);}
+  .dashboard{background:linear-gradient(180deg, var(--panel), var(--deep)); border:1px solid var(--line); border-radius:20px; padding:28px; box-shadow:var(--shadow); position:relative; z-index:1;}
   .dash-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px;}
-  .dash-title{display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono'; font-size:13px; color:var(--cyan-200);}
-  .status-badge{
-    display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px;
-    background:rgba(17,220,235,0.1); border:1px solid rgba(17,220,235,0.35);
-    font-family:'JetBrains Mono'; font-size:12px; color:var(--cyan-300); transition:all .4s ease;
-  }
-  .status-badge .pulse-dot{
-    width:8px;height:8px;border-radius:50%; background:var(--cyan-400);
-    animation:blink 1.6s ease-in-out infinite;
-  }
+  .dash-title{display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono'; font-size:13px; color:var(--paper-dim);}
+  .dash-controls{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .status-badge{display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; background:rgba(22,227,198,0.1); border:1px solid rgba(22,227,198,0.35); font-family:'JetBrains Mono'; font-size:12px; color:var(--signal-soft); transition:all .4s ease;}
+  .status-badge .pulse-dot{width:8px;height:8px;border-radius:50%; background:var(--signal); animation:blink 1.6s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1;} 50%{opacity:0.35;}}
-  .status-badge.warn{background:rgba(255,176,32,0.12); border-color:rgba(255,176,32,0.4); color:var(--amber);}
-  .status-badge.warn .pulse-dot{background:var(--amber);}
+  .status-badge.warn{background:rgba(255,143,66,0.12); border-color:rgba(255,143,66,0.4); color:var(--alert);}
+  .status-badge.warn .pulse-dot{background:var(--alert);}
+
+  .toast{
+    display:flex; align-items:flex-start; gap:12px;
+    background:linear-gradient(165deg, rgba(255,143,66,0.14), var(--panel-2));
+    border:1px solid rgba(255,143,66,0.4); border-radius:12px; padding:14px 16px; margin-bottom:18px;
+    opacity:0; transform:translateY(-10px); max-height:0; overflow:hidden; padding-top:0; padding-bottom:0; border-width:0; margin-bottom:0;
+    transition:opacity .35s ease, transform .35s ease, max-height .4s ease, padding .4s ease, margin .4s ease, border-width .4s ease;
+  }
+  .toast.show{opacity:1; transform:translateY(0); max-height:100px; padding-top:14px; padding-bottom:14px; border-width:1px; margin-bottom:18px;}
+  .toast .t-icon{width:30px; height:30px; border-radius:8px; background:var(--alert); color:var(--void); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:15px;}
+  .toast strong{display:block; font-size:13.5px; margin-bottom:2px;}
+  .toast span{font-size:12.5px; color:var(--paper-dim); line-height:1.4;}
 
   .sensor-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
-  .sensor-card{
-    background:var(--navy-800); border:1px solid var(--line); border-radius:14px; padding:18px 16px;
-    transition:border-color .4s;
-  }
-  .sensor-card .s-label{font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--cyan-200); opacity:0.7;}
-  .sensor-card .s-value{font-family:'Space Grotesk'; font-size:26px; font-weight:700; margin:8px 0 2px; color:var(--cyan-300);}
-  .sensor-card .s-value .unit{font-size:13px; font-weight:500; opacity:0.6; margin-left:2px;}
-  .sensor-card svg{width:100%; height:32px; margin-top:8px; display:block;}
-  .sensor-card polyline{fill:none; stroke:var(--cyan-400); stroke-width:1.6; opacity:0.85;}
-  .sensor-card.warn .s-value{color:var(--amber);}
-  .sensor-card.warn polyline{stroke:var(--amber);}
-  .sensor-card.warn{border-color:rgba(255,176,32,0.5);}
+  .sensor-card{background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:16px 16px 14px; transition:border-color .4s;}
+  .s-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
+  .s-label{font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:.02em; color:var(--paper-dim);}
+  .s-dot{width:6px;height:6px;border-radius:50%; background:var(--signal); transition:background .3s;}
+  .sensor-card.warn .s-dot{background:var(--alert); animation:blink 1s ease-in-out infinite;}
+  .s-value{font-family:'Space Grotesk'; font-size:24px; font-weight:700; margin:2px 0 10px; color:var(--signal-soft); transition:color .3s;}
+  .s-value .unit{font-size:12px; font-weight:500; opacity:0.6; margin-left:2px;}
+  .sensor-card.warn .s-value{color:var(--alert);}
+  .s-track{position:relative; height:5px; border-radius:4px; background:var(--panel-3); margin-bottom:10px; overflow:visible;}
+  .s-fill{position:absolute; inset:0; width:0%; border-radius:4px; background:var(--signal); transition:width .8s ease, background .3s;}
+  .sensor-card.warn .s-fill{background:var(--alert);}
+  .s-threshold{position:absolute; top:-3px; width:2px; height:11px; background:var(--paper-dim); opacity:.55; left:80%;}
+  .s-spark{width:100%; height:26px; display:block;}
+  .s-spark polyline{fill:none; stroke:var(--signal); stroke-width:1.5; opacity:0.7;}
+  .sensor-card.warn .s-spark polyline{stroke:var(--alert);}
 
   /* ---------- CTA / CONTATO ---------- */
   .cta-sec{
-    background:linear-gradient(135deg, var(--navy-700), var(--navy-800) 60%);
-    border-radius:24px; padding:64px 56px; margin:0 32px; max-width:1180px; margin:0 auto;
+    background:linear-gradient(135deg, var(--panel-3), var(--panel-2) 60%);
+    border-radius:24px; padding:64px 56px; max-width:1180px; margin:0 auto;
     display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;
-    position:relative; overflow:hidden;
+    position:relative; overflow:hidden; z-index:1;
   }
-  .cta-sec::after{
-    content:""; position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%;
-    background:radial-gradient(circle, rgba(17,220,235,0.25), transparent 70%);
-  }
+  .cta-sec::after{content:""; position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(22,227,198,0.25), transparent 70%);}
   .cta-sec h2{font-size:28px; max-width:420px; position:relative;}
-  .cta-sec p{color:var(--cyan-200); opacity:0.85; margin-top:10px; max-width:420px; position:relative;}
+  .cta-sec p{color:var(--paper-dim); margin-top:10px; max-width:420px; position:relative;}
   .cta-form{position:relative; z-index:1;}
 
-  footer{padding:56px 0 34px; border-top:1px solid var(--line); margin-top:100px;}
+  footer{padding:56px 0 34px; border-top:1px solid var(--line); margin-top:100px; position:relative; z-index:1;}
   .footer-grid{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px;}
   .footer-brand{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
   .footer-brand img{width:26px;height:26px;}
   .footer-brand span{font-family:'Space Grotesk'; font-weight:700; font-size:16px;}
-  footer p.small{font-size:13px; color:var(--cyan-200); opacity:0.65; max-width:280px; line-height:1.6;}
+  footer p.small{font-size:13px; color:var(--paper-dim); max-width:280px; line-height:1.6;}
   .footer-cols{display:flex; gap:60px;}
-  .footer-col h5{font-family:'JetBrains Mono'; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--cyan-400); margin-bottom:14px;}
-  .footer-col a{display:block; font-size:13.5px; color:var(--ice-100); opacity:0.75; margin-bottom:10px; transition:opacity .2s;}
+  .footer-col h5{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--signal); margin-bottom:14px;}
+  .footer-col a{display:block; font-size:13.5px; color:var(--paper); opacity:0.75; margin-bottom:10px; transition:opacity .2s;}
   .footer-col a:hover{opacity:1;}
-  .footer-bottom{margin-top:46px; padding-top:22px; border-top:1px solid var(--line); font-size:12.5px; color:var(--cyan-200); opacity:0.55; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  .footer-bottom{margin-top:46px; padding-top:22px; border-top:1px solid var(--line); font-size:12.5px; color:var(--paper-dim); opacity:0.85; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
 
   @media (max-width:920px){
     .hero-grid, .product-grid, .ps-grid{grid-template-columns:1fr;}
@@ -287,16 +324,19 @@
     </div>
     <a href="#contato" class="btn btn-primary">Solicitar demonstração</a>
   </nav>
+  <div class="ticker-bar ticker-mask">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
 </header>
 
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="heroSection">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow">Manutenção preditiva industrial</div>
-        <h1>Sua máquina avisa antes de<br><span class="accent">parar de avisar.</span></h1>
+        <div class="eyebrow">manutenção preditiva industrial</div>
+        <h1>Sua máquina avisa antes de<br><span class="accent">parar de funcionar.</span></h1>
         <p class="lead">O SmartPredict monitora temperatura, vibração, pressão e umidade em tempo real e identifica padrões de falha antes que virem parada de produção.</p>
         <div class="hero-ctas">
           <a href="#contato" class="btn btn-primary">Falar com a Predicta</a>
@@ -310,13 +350,46 @@
       </div>
 
       <div class="hero-visual">
-        <svg viewBox="0 0 420 300" preserveAspectRatio="none">
-          <polyline class="pulse-line dim" points="0,230 40,225 80,232 120,215 160,222 200,140 240,205 280,150 320,190 360,60 400,95" />
-          <polyline class="pulse-line" points="0,260 40,255 80,262 120,240 160,248 200,150 240,235 280,160 320,215 360,40 400,80" />
+        <svg class="schematic" viewBox="0 0 460 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama animado: sensores de temperatura, vibração, pressão e umidade enviam dados ao núcleo SmartPredict, que dispara um alerta">
+          <path class="wire flow" d="M76,40 C150,40 150,120 216,148" />
+          <path class="wire flow d2" d="M76,120 C150,120 160,150 216,158" />
+          <path class="wire flow d3" d="M76,200 C150,200 160,180 216,172" />
+          <path class="wire flow d4" d="M76,280 C150,280 160,220 216,182" />
+          <path class="wire flow" d="M306,160 C360,160 370,160 404,160" />
+
+          <g class="node n1" transform="translate(58,40)">
+            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
+            <text x="0" y="32" text-anchor="middle" class="node-label">TEMP</text>
+          </g>
+          <g class="node n2" transform="translate(58,120)">
+            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
+            <text x="0" y="32" text-anchor="middle" class="node-label">VIBR</text>
+          </g>
+          <g class="node n3" transform="translate(58,200)">
+            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
+            <text x="0" y="32" text-anchor="middle" class="node-label">PRES</text>
+          </g>
+          <g class="node n4" transform="translate(58,280)">
+            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
+            <text x="0" y="32" text-anchor="middle" class="node-label">UMID</text>
+          </g>
+
+          <g transform="translate(216,110)">
+            <rect width="90" height="100" rx="10" class="chip-box"/>
+            <text x="45" y="20" text-anchor="middle" class="chip-title">CORE</text>
+            <clipPath id="scopeClip"><rect x="10" y="30" width="70" height="34" rx="4"/></clipPath>
+            <rect x="10" y="30" width="70" height="34" rx="4" class="scope-bg"/>
+            <polyline points="10,48 20,40 30,54 40,36 50,50 60,42 70,56 80,44 90,52" class="scope-wave" clip-path="url(#scopeClip)"/>
+            <rect x="10" y="30" width="6" height="34" class="scope-sweep" clip-path="url(#scopeClip)"/>
+            <text x="45" y="80" text-anchor="middle" class="chip-sub">raspberry pi</text>
+          </g>
+
+          <g id="node-alert" transform="translate(420,160)">
+            <circle r="17" class="alert-ring"/>
+            <path d="M-4,-5 a4,4 0 0 1 8,0 v5 l3,4 h-14 l3,-4 z" class="alert-bell"/>
+            <circle cx="0" cy="6" r="1.6" class="alert-bell"/>
+          </g>
         </svg>
-        <div class="chip chip1"><div class="v">42.6 <span style="font-size:10px;opacity:.7">°C</span></div><div class="l">Temperatura A</div></div>
-        <div class="chip chip2"><div class="v">0.021 <span style="font-size:10px;opacity:.7">g</span></div><div class="l">Vibração</div></div>
-        <div class="chip chip3"><div class="v">1.013 <span style="font-size:10px;opacity:.7">bar</span></div><div class="l">Pressão</div></div>
       </div>
     </div>
   </section>
@@ -327,7 +400,7 @@
   <section class="pad">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">Dor e solução</div>
+        <div class="eyebrow">dor e solução</div>
         <h2>Parada não planejada custa mais do que qualquer sensor.</h2>
         <p>A manutenção corretiva reage depois do problema. A Predicta antecipa.</p>
       </div>
@@ -360,63 +433,74 @@
   <section class="pad product" id="produto">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">O produto</div>
+        <div class="eyebrow">o produto</div>
         <h2>SmartPredict: um Raspberry Pi com cinco sentidos para sua máquina.</h2>
-        <p>Um único módulo reúne captação, processamento e alerta — pronto para ser instalado direto no painel do equipamento.</p>
+        <p>Um único módulo reúne captação, processamento e alerta — pronto para ser instalado direto no painel do equipamento. Passe o mouse nas fichas ao lado para localizar cada sensor na placa.</p>
       </div>
 
       <div class="product-grid">
         <div class="board-wrap">
           <svg viewBox="0 0 420 380" fill="none">
-            <rect x="90" y="70" width="240" height="240" rx="14" fill="#0e2739" stroke="#16527d" stroke-width="2"/>
-            <rect x="112" y="92" width="196" height="196" rx="6" fill="#0a1f2e" stroke="rgba(184,246,251,0.15)"/>
-            <circle cx="140" cy="120" r="4" fill="#11dceb"/>
-            <circle cx="160" cy="120" r="4" fill="#11dceb" opacity="0.5"/>
-            <circle cx="180" cy="120" r="4" fill="#11dceb" opacity="0.3"/>
-            <rect x="130" y="150" width="150" height="26" rx="4" fill="#123249" stroke="rgba(184,246,251,0.2)"/>
-            <text x="140" y="167" fill="#6eeffa" font-family="JetBrains Mono" font-size="10">CPU · SmartPredict Core</text>
-            <rect x="130" y="188" width="70" height="70" rx="6" fill="#123249" stroke="rgba(184,246,251,0.2)"/>
-            <rect x="210" y="188" width="70" height="70" rx="6" fill="#123249" stroke="rgba(184,246,251,0.2)"/>
-            <line x1="90" y1="140" x2="30" y2="90" stroke="#11dceb" stroke-width="1.5"/>
-            <circle cx="30" cy="90" r="4" fill="#11dceb"/>
-            <line x1="90" y1="200" x2="24" y2="200" stroke="#11dceb" stroke-width="1.5"/>
-            <circle cx="24" cy="200" r="4" fill="#11dceb"/>
-            <line x1="90" y1="260" x2="30" y2="300" stroke="#11dceb" stroke-width="1.5"/>
-            <circle cx="30" cy="300" r="4" fill="#11dceb"/>
-            <line x1="330" y1="140" x2="394" y2="90" stroke="#11dceb" stroke-width="1.5"/>
-            <circle cx="394" cy="90" r="4" fill="#11dceb"/>
-            <line x1="330" y1="220" x2="398" y2="220" stroke="#11dceb" stroke-width="1.5"/>
-            <circle cx="398" cy="220" r="4" fill="#11dceb"/>
-            <text x="10" y="76" fill="#eaf6f8" font-family="JetBrains Mono" font-size="9" opacity="0.7">T1</text>
-            <text x="4" y="192" fill="#eaf6f8" font-family="JetBrains Mono" font-size="9" opacity="0.7">VIBR</text>
-            <text x="10" y="322" fill="#eaf6f8" font-family="JetBrains Mono" font-size="9" opacity="0.7">T2</text>
-            <text x="378" y="76" fill="#eaf6f8" font-family="JetBrains Mono" font-size="9" opacity="0.7">PRES</text>
-            <text x="378" y="240" fill="#eaf6f8" font-family="JetBrains Mono" font-size="9" opacity="0.7">UMID</text>
+            <rect x="90" y="70" width="240" height="240" rx="14" fill="#0e2739" stroke="#1f4c68" stroke-width="2"/>
+            <rect x="112" y="92" width="196" height="196" rx="6" fill="#081620" stroke="rgba(139,243,226,0.15)"/>
+            <circle cx="140" cy="120" r="4" fill="#16e3c6" class="cpu-glow"/>
+            <circle cx="160" cy="120" r="4" fill="#16e3c6" opacity="0.5" class="cpu-glow"/>
+            <circle cx="180" cy="120" r="4" fill="#16e3c6" opacity="0.3" class="cpu-glow"/>
+            <rect x="130" y="150" width="150" height="26" rx="4" fill="#13304a" stroke="rgba(139,243,226,0.2)"/>
+            <text x="140" y="167" fill="#8bf3e2" font-family="JetBrains Mono" font-size="10">CPU · SmartPredict Core</text>
+            <rect x="130" y="188" width="70" height="70" rx="6" fill="#13304a" stroke="rgba(139,243,226,0.2)"/>
+            <rect x="210" y="188" width="70" height="70" rx="6" fill="#13304a" stroke="rgba(139,243,226,0.2)"/>
+
+            <g class="pin" id="pin-t1">
+              <line class="pin-line" x1="90" y1="140" x2="30" y2="90"/>
+              <circle class="pin-dot" cx="30" cy="90" r="4"/>
+              <text class="pin-label" x="6" y="76">T1</text>
+            </g>
+            <g class="pin" id="pin-vib">
+              <line class="pin-line" x1="90" y1="200" x2="24" y2="200"/>
+              <circle class="pin-dot" cx="24" cy="200" r="4"/>
+              <text class="pin-label" x="2" y="192">VIBR</text>
+            </g>
+            <g class="pin" id="pin-t2">
+              <line class="pin-line" x1="90" y1="260" x2="30" y2="300"/>
+              <circle class="pin-dot" cx="30" cy="300" r="4"/>
+              <text class="pin-label" x="8" y="322">T2</text>
+            </g>
+            <g class="pin" id="pin-pres">
+              <line class="pin-line" x1="330" y1="140" x2="394" y2="90"/>
+              <circle class="pin-dot" cx="394" cy="90" r="4"/>
+              <text class="pin-label" x="374" y="76">PRES</text>
+            </g>
+            <g class="pin" id="pin-umid">
+              <line class="pin-line" x1="330" y1="220" x2="398" y2="220"/>
+              <circle class="pin-dot" cx="398" cy="220" r="4"/>
+              <text class="pin-label" x="374" y="240">UMID</text>
+            </g>
           </svg>
         </div>
 
         <div class="sensor-specs">
-          <div class="spec-card">
+          <div class="spec-card" data-pins="pin-t1,pin-t2" tabindex="0">
             <div class="tag">Sensor 01 · 02</div>
             <h4>Temperatura (duplo)</h4>
             <p>Duas leituras simultâneas em pontos distintos da máquina — identifica aquecimento localizado antes de virar superaquecimento.</p>
           </div>
-          <div class="spec-card">
+          <div class="spec-card" data-pins="pin-vib" tabindex="0">
             <div class="tag">Sensor 03</div>
             <h4>Vibração</h4>
             <p>Detecta desalinhamento, folga ou desgaste de rolamento pela variação do padrão vibracional.</p>
           </div>
-          <div class="spec-card">
+          <div class="spec-card" data-pins="pin-pres" tabindex="0">
             <div class="tag">Sensor 04</div>
             <h4>Pressão</h4>
             <p>Acompanha variações que indicam vazamento, entupimento ou sobrecarga no sistema.</p>
           </div>
-          <div class="spec-card">
+          <div class="spec-card" data-pins="pin-umid" tabindex="0">
             <div class="tag">Sensor 05</div>
             <h4>Umidade</h4>
             <p>Monitora condições ambientais que aceleram corrosão e falhas elétricas.</p>
           </div>
-          <div class="spec-card wide">
+          <div class="spec-card wide" data-pins="pin-t1,pin-vib,pin-t2,pin-pres,pin-umid" tabindex="0">
             <div class="tag">Núcleo</div>
             <h4>Processamento embarcado em Raspberry Pi</h4>
             <p>Todo o processamento acontece na própria placa, junto da máquina — sem depender de nuvem para gerar o alerta.</p>
@@ -432,7 +516,7 @@
   <section class="pad" id="como-funciona">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">Como funciona</div>
+        <div class="eyebrow">como funciona</div>
         <h2>Da leitura do sensor ao alerta, em quatro etapas.</h2>
       </div>
       <div class="steps">
@@ -466,19 +550,27 @@
   <section class="pad panel-sec" id="painel">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">Painel de monitoramento</div>
+        <div class="eyebrow">painel de monitoramento</div>
         <h2>Assim como seria o painel da sua máquina agora.</h2>
-        <p>Simulação com valores ilustrativos — no SmartPredict real, esses números vêm direto dos sensores.</p>
+        <p>Simulação com valores ilustrativos — no SmartPredict real, esses números vêm direto dos sensores. Use o botão abaixo para simular um pico e ver o alerta em ação.</p>
       </div>
 
       <div class="dashboard">
         <div class="dash-top">
           <div class="dash-title">smartpredict://painel/maquina-04</div>
-          <div class="status-badge" id="statusBadge"><span class="pulse-dot"></span><span id="statusText">Operação normal</span></div>
+          <div class="dash-controls">
+            <button class="btn btn-ghost btn-sm" id="simulateBtn" type="button">Simular pico de vibração</button>
+            <div class="status-badge" id="statusBadge"><span class="pulse-dot"></span><span id="statusText">Operação normal</span></div>
+          </div>
         </div>
-        <div class="sensor-grid" id="sensorGrid">
-          <!-- sensor cards injected by JS -->
+        <div class="toast" id="toast" role="status" aria-live="polite">
+          <div class="t-icon">!</div>
+          <div>
+            <strong>Alerta enviado</strong>
+            <span>Vibração acima do padrão detectada na Máquina 04 — mensagem enviada à equipe de manutenção via WhatsApp.</span>
+          </div>
         </div>
+        <div class="sensor-grid" id="sensorGrid"></div>
       </div>
     </div>
   </section>
@@ -492,7 +584,7 @@
           <p>Fale com a equipe Predicta e agende uma demonstração do SmartPredict na sua operação.</p>
         </div>
         <div class="cta-form">
-          <a href="mailto:predictasmart@gmail.com" class="btn btn-primary" style="background:var(--navy-950); color:var(--cyan-300);">predictasmart@gmail.com</a>
+          <a href="mailto:predictasmart@gmail.com" class="btn btn-primary" style="background:var(--void); color:var(--signal-soft);">predictasmart@gmail.com</a>
         </div>
       </div>
     </div>
@@ -529,36 +621,27 @@
 </footer>
 
 <script>
-  // Signature live dashboard: 5 sensors with random-walk values + sparklines
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- sensor model (shared by ticker + dashboard) ---------------- */
   const sensors = [
-    { key:'t1', label:'Temperatura A', unit:'°C', value:42.6, min:35, max:55, warnAt:52, decimals:1, history:[] },
-    { key:'t2', label:'Temperatura B', unit:'°C', value:39.8, min:33, max:53, warnAt:50, decimals:1, history:[] },
-    { key:'vib', label:'Vibração', unit:'g', value:0.021, min:0.005, max:0.09, warnAt:0.07, decimals:3, history:[] },
-    { key:'pres', label:'Pressão', unit:'bar', value:1.013, min:0.85, max:1.35, warnAt:1.28, decimals:3, history:[] },
-    { key:'umid', label:'Umidade', unit:'%', value:48, min:30, max:75, warnAt:70, decimals:0, history:[] },
+    { key:'t1',   label:'Temperatura A', unit:'°C',  value:42.6,  min:35,    max:55,   warnAt:52,   decimals:1, history:[] },
+    { key:'t2',   label:'Temperatura B', unit:'°C',  value:39.8,  min:33,    max:53,   warnAt:50,   decimals:1, history:[] },
+    { key:'vib',  label:'Vibração',      unit:'g',   value:0.021, min:0.005, max:0.09, warnAt:0.07, decimals:3, history:[] },
+    { key:'pres', label:'Pressão',       unit:'bar', value:1.013, min:0.85,  max:1.35, warnAt:1.28, decimals:3, history:[] },
+    { key:'umid', label:'Umidade',       unit:'%',   value:48,    min:30,    max:75,   warnAt:70,   decimals:0, history:[] },
   ];
-
-  const grid = document.getElementById('sensorGrid');
-  const statusBadge = document.getElementById('statusBadge');
-  const statusText = document.getElementById('statusText');
-
-  function makeCard(s){
-    const card = document.createElement('div');
-    card.className = 'sensor-card';
-    card.id = 'card-' + s.key;
-    card.innerHTML = `
-      <div class="s-label">${s.label}</div>
-      <div class="s-value" id="val-${s.key}">${s.value.toFixed(s.decimals)}<span class="unit">${s.unit}</span></div>
-      <svg viewBox="0 0 100 32" preserveAspectRatio="none"><polyline id="spark-${s.key}" points=""/></svg>
-    `;
-    return card;
-  }
-  sensors.forEach(s => grid.appendChild(makeCard(s)));
+  let spike = null; // {key, target, until}
 
   function step(s){
     const range = s.max - s.min;
-    const delta = (Math.random() - 0.5) * range * 0.06;
-    s.value = Math.min(s.max, Math.max(s.min, s.value + delta));
+    if (spike && spike.key === s.key && Date.now() < spike.until){
+      s.value += (spike.target - s.value) * 0.35;
+    } else {
+      const delta = (Math.random() - 0.5) * range * 0.06;
+      s.value = Math.min(s.max, Math.max(s.min, s.value + delta));
+    }
+    s.value = Math.min(s.max, Math.max(s.min, s.value));
     s.history.push(s.value);
     if (s.history.length > 24) s.history.shift();
   }
@@ -566,12 +649,74 @@
   function normalize(history, min, max){
     return history.map((v, i) => {
       const x = (i / Math.max(1, history.length - 1)) * 100;
-      const y = 30 - ((v - min) / (max - min)) * 28 - 1;
+      const y = 24 - ((v - min) / (max - min)) * 21 - 1;
       return `${x.toFixed(1)},${y.toFixed(1)}`;
     }).join(' ');
   }
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------------- ticker ---------------- */
+  const tickerTrack = document.getElementById('tickerTrack');
+  function tickerRow(){
+    const frag = document.createDocumentFragment();
+    sensors.forEach(s => {
+      const el = document.createElement('span');
+      el.className = 'ticker-item';
+      el.innerHTML = `<b class="tick-${s.key}">${s.value.toFixed(s.decimals)}${s.unit}</b>${s.label}`;
+      frag.appendChild(el);
+      const sep = document.createElement('span');
+      sep.className = 'ticker-item sep';
+      sep.textContent = '/';
+      frag.appendChild(sep);
+    });
+    const statusEl = document.createElement('span');
+    statusEl.className = 'ticker-item';
+    statusEl.innerHTML = 'STATUS <b class="tick-status">OPERAÇÃO NORMAL</b>';
+    frag.appendChild(statusEl);
+    const sep2 = document.createElement('span');
+    sep2.className = 'ticker-item sep';
+    sep2.textContent = '/';
+    frag.appendChild(sep2);
+    return frag;
+  }
+  tickerTrack.appendChild(tickerRow());
+  tickerTrack.appendChild(tickerRow());
+
+  /* ---------------- dashboard cards ---------------- */
+  const grid = document.getElementById('sensorGrid');
+  function makeCard(s){
+    const card = document.createElement('div');
+    card.className = 'sensor-card';
+    card.id = 'card-' + s.key;
+    const threshPct = ((s.warnAt - s.min) / (s.max - s.min)) * 100;
+    card.innerHTML = `
+      <div class="s-top"><span class="s-label">${s.label}</span><span class="s-dot"></span></div>
+      <div class="s-value" id="val-${s.key}">${s.value.toFixed(s.decimals)}<span class="unit">${s.unit}</span></div>
+      <div class="s-track"><div class="s-fill" id="fill-${s.key}"></div><div class="s-threshold" style="left:${threshPct}%"></div></div>
+      <svg class="s-spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline id="spark-${s.key}" points=""/></svg>
+    `;
+    return card;
+  }
+  sensors.forEach(s => grid.appendChild(makeCard(s)));
+
+  const statusBadge = document.getElementById('statusBadge');
+  const statusText = document.getElementById('statusText');
+  const toast = document.getElementById('toast');
+  const alertNode = document.getElementById('node-alert');
+  let toastCooldown = false;
+
+  function showToast(){
+    if (toastCooldown) return;
+    toastCooldown = true;
+    toast.classList.add('show');
+    if (alertNode){
+      alertNode.classList.add('armed');
+      setTimeout(() => alertNode.classList.remove('armed'), 2200);
+    }
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => { toastCooldown = false; }, 4000);
+    }, 4500);
+  }
 
   function tick(){
     let anyWarn = false;
@@ -579,29 +724,68 @@
       step(s);
       const isWarn = s.value >= s.warnAt;
       if (isWarn) anyWarn = true;
+
       const valEl = document.getElementById('val-' + s.key);
+      const fillEl = document.getElementById('fill-' + s.key);
       const sparkEl = document.getElementById('spark-' + s.key);
       const cardEl = document.getElementById('card-' + s.key);
+      const pct = ((s.value - s.min) / (s.max - s.min)) * 100;
+
       if (valEl) valEl.innerHTML = `${s.value.toFixed(s.decimals)}<span class="unit">${s.unit}</span>`;
+      if (fillEl) fillEl.style.width = pct + '%';
       if (sparkEl) sparkEl.setAttribute('points', normalize(s.history, s.min, s.max));
       if (cardEl) cardEl.classList.toggle('warn', isWarn);
+
+      document.querySelectorAll('.tick-' + s.key).forEach(el => {
+        el.textContent = s.value.toFixed(s.decimals) + s.unit;
+      });
     });
+
     if (anyWarn){
       statusBadge.classList.add('warn');
       statusText.textContent = 'Atenção: variação fora do padrão';
+      showToast();
     } else {
       statusBadge.classList.remove('warn');
       statusText.textContent = 'Operação normal';
     }
+    document.querySelectorAll('.tick-status').forEach(el => {
+      el.textContent = anyWarn ? 'ATENÇÃO' : 'OPERAÇÃO NORMAL';
+    });
   }
 
-  // seed initial history so sparklines aren't empty on load
   sensors.forEach(s => { for (let i=0;i<12;i++) step(s); });
   tick();
-  if (!reduceMotion){
-    setInterval(tick, 1700);
-  } else {
-    setInterval(tick, 4000);
+  setInterval(tick, reduceMotion ? 4000 : 1700);
+
+  /* ---------------- fault simulation button ---------------- */
+  const simulateBtn = document.getElementById('simulateBtn');
+  simulateBtn.addEventListener('click', () => {
+    simulateBtn.disabled = true;
+    spike = { key:'vib', target:0.085, until: Date.now() + 5000 };
+    setTimeout(() => { spike = null; }, 5000);
+    setTimeout(() => { simulateBtn.disabled = false; }, 9000);
+  });
+
+  /* ---------------- product spec → board pin highlight ---------------- */
+  document.querySelectorAll('.spec-card').forEach(card => {
+    const pinIds = (card.dataset.pins || '').split(',').filter(Boolean);
+    const activate = () => pinIds.forEach(id => document.getElementById(id)?.classList.add('active'));
+    const deactivate = () => pinIds.forEach(id => document.getElementById(id)?.classList.remove('active'));
+    card.addEventListener('mouseenter', activate);
+    card.addEventListener('mouseleave', deactivate);
+    card.addEventListener('focus', activate);
+    card.addEventListener('blur', deactivate);
+  });
+
+  /* ---------------- hero cursor glow (subtle, desktop only) ---------------- */
+  if (!reduceMotion && window.matchMedia('(pointer:fine)').matches){
+    const hero = document.getElementById('heroSection');
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
   }
 </script>
 
