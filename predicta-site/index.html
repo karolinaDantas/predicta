@@ -6,7 +6,7 @@
 <meta name="description" content="SmartPredict, da Predicta: manutenção preditiva industrial com sensores de temperatura, vibração, pressão e umidade, alertas em tempo real e processamento embarcado.">
 <title>Predicta | SmartPredict — Inteligência para manutenção preditiva</title>
 <meta name="theme-color" content="#061018">
-<meta property="og:title" content="Predicta | SmartPredict">
+<meta property="og:title" content="Predicta | SmartPredict e Modelos 3D">
 <meta property="og:description" content="Monitoramento industrial inteligente para antecipar falhas, reduzir paradas e apoiar decisões de manutenção.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -351,6 +351,74 @@
     .back-top{right:16px;bottom:16px;}
   }
 
+
+  /* --- Galeria de modelos 3D integrada ao site original --- */
+  .models-section{background:radial-gradient(ellipse 800px 460px at 85% 15%,rgba(22,201,176,.055),transparent 65%),var(--void);}
+  .models-intro{display:flex;justify-content:space-between;align-items:end;gap:28px;flex-wrap:wrap;margin-bottom:28px;}
+  .models-intro .sec-head{margin-bottom:0;}
+  .models-intro .models-count{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px 20px;min-width:145px;}
+  .models-count strong{display:block;font:700 30px 'Space Grotesk';color:var(--signal-soft);}
+  .models-count span{font:10px 'JetBrains Mono';color:var(--paper-dim);text-transform:uppercase;letter-spacing:.04em;}
+  .model-filters{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 30px;}
+  .model-filter{border:1px solid var(--line);background:var(--panel);color:var(--paper-dim);padding:9px 15px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;}
+  .model-filter:hover,.model-filter[aria-pressed="true"]{border-color:var(--signal);background:var(--signal-dim);color:var(--signal-soft);}
+  .model-group{margin:0 0 48px;scroll-margin-top:115px;}
+  .model-group[hidden]{display:none!important;}
+  .model-group-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+  .model-group-head h3{font-size:23px;margin-top:8px;}
+  .model-group-head p{font-size:13px;color:var(--paper-dim);line-height:1.55;margin:0;max-width:430px;}
+  .model-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;position:relative;z-index:1;}
+  .model-card{overflow:hidden;background:linear-gradient(160deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:14px;transition:transform .2s,border-color .2s,box-shadow .2s;}
+  .model-card:hover{transform:translateY(-4px);border-color:rgba(22,201,176,.42);box-shadow:0 18px 45px rgba(0,0,0,.25);}
+  .model-image-button{display:block;width:100%;height:255px;padding:14px;border:0;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at center,#102638 0%,#050b10 76%);cursor:zoom-in;position:relative;}
+  .model-image-button img{width:100%;height:100%;object-fit:contain;transition:transform .25s;}
+  .model-card:hover .model-image-button img{transform:scale(1.035);}
+  .model-image-button:after{content:"AMPLIAR ↗";position:absolute;right:12px;bottom:11px;padding:6px 8px;border:1px solid rgba(139,231,216,.2);border-radius:5px;background:rgba(4,9,13,.82);color:var(--signal-soft);font:9px 'JetBrains Mono';opacity:0;transition:opacity .2s;}
+  .model-card:hover .model-image-button:after,.model-image-button:focus-visible:after{opacity:1;}
+  .model-image-button.missing{cursor:default;}
+  .model-image-button.missing img{display:none;}
+  .model-image-button.missing:before{content:"Imagem não encontrada";position:absolute;inset:0;display:grid;place-items:center;color:var(--paper-dim);font:11px 'JetBrains Mono';}
+  .model-image-button.missing:after{display:none;}
+  .model-card-info{padding:17px 19px 19px;}
+  .model-card-info .tag{font:10px 'JetBrains Mono';color:var(--signal);letter-spacing:.035em;}
+  .model-card-info h4{font:600 17px 'Space Grotesk';margin:8px 0 6px;}
+  .model-card-info p{font-size:12.5px;color:var(--paper-dim);line-height:1.55;margin:0;}
+  .models-note{border:1px solid var(--line);border-radius:11px;background:rgba(11,28,41,.65);padding:15px 18px;color:var(--paper-dim);font-size:12.5px;line-height:1.6;}
+  .models-note strong{color:var(--signal-soft);}
+  .models-lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;flex-direction:column;gap:13px;padding:24px;}
+  .models-lightbox.open{display:flex;}
+  .models-lightbox img{max-width:min(1100px,94vw);max-height:76vh;object-fit:contain;background:#050b10;border:1px solid var(--line);border-radius:12px;}
+  .models-lightbox p{margin:0;color:var(--paper-dim);font-size:13px;text-align:center;}
+  .models-lightbox-close{position:absolute;top:20px;right:22px;border:1px solid var(--line);background:var(--panel);color:var(--paper);border-radius:50%;width:42px;height:42px;font-size:24px;cursor:pointer;}
+  .models-lightbox-nav{display:flex;gap:10px;}
+  .models-lightbox-nav button{border:1px solid var(--line);background:var(--panel);color:var(--signal-soft);border-radius:8px;padding:9px 14px;cursor:pointer;}
+  .models-lightbox-nav button:disabled{opacity:.35;cursor:not-allowed;}
+  @media(max-width:1000px){.model-gallery{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:560px){.models-intro{align-items:flex-start;flex-direction:column;}.model-gallery{grid-template-columns:1fr;}.model-image-button{height:250px;}.model-group-head{align-items:flex-start;flex-direction:column;}.models-lightbox{padding:15px;}.models-lightbox img{max-width:96vw;max-height:70vh;}}
+
+  /* --- Seção Nossa Equipe --- */
+  .team-section{background:radial-gradient(ellipse 800px 460px at 15% 10%,rgba(22,201,176,.06),transparent 65%),var(--void);}
+  .team-intro{display:flex;justify-content:space-between;align-items:end;gap:28px;flex-wrap:wrap;margin-bottom:34px;}
+  .team-intro .sec-head{margin-bottom:0;}
+  .team-count{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px 20px;min-width:145px;}
+  .team-count strong{display:block;font:700 30px 'Space Grotesk',sans-serif;color:var(--signal-soft);}
+  .team-count span{font:10px 'JetBrains Mono',monospace;color:var(--paper-dim);text-transform:uppercase;letter-spacing:.04em;}
+  .team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;position:relative;z-index:1;}
+  .team-card{position:relative;display:flex;align-items:center;gap:24px;padding:28px 28px 28px 26px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,var(--panel-2),var(--panel));overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;}
+  .team-card::before{content:"";position:absolute;top:10px;left:10px;width:14px;height:14px;border-top:1.5px solid var(--signal);border-left:1.5px solid var(--signal);border-radius:3px 0 0 0;opacity:.55;transition:opacity .2s;}
+  .team-card::after{content:"";position:absolute;right:-60px;bottom:-60px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(22,201,176,.14),transparent 70%);pointer-events:none;}
+  .team-card:hover{transform:translateY(-4px);border-color:rgba(22,201,176,.45);box-shadow:var(--shadow);}
+  .team-card:hover::before{opacity:1;}
+  .team-avatar{flex-shrink:0;position:relative;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(from 210deg,var(--signal),var(--wire) 45%,var(--signal) 100%);padding:2px;}
+  .team-avatar span{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,var(--panel-3),var(--deep));font:700 28px 'Space Grotesk',sans-serif;color:var(--signal-soft);letter-spacing:.02em;}
+  .team-avatar i{position:absolute;right:3px;bottom:5px;width:15px;height:15px;border-radius:50%;background:var(--signal);border:3px solid var(--panel);box-shadow:0 0 10px rgba(22,201,176,.6);}
+  .team-body{position:relative;z-index:1;min-width:0;}
+  .team-tag{display:inline-block;font:11px 'JetBrains Mono',monospace;color:var(--signal);padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--signal-dim);}
+  .team-card h3{font-size:clamp(19px,2vw,23px);line-height:1.2;margin:12px 0 8px;color:var(--paper);}
+  .team-card p{font:11.5px 'JetBrains Mono',monospace;color:var(--paper-dim);margin:0;}
+  @media(max-width:920px){.team-grid{grid-template-columns:1fr;}}
+  @media(max-width:560px){.team-intro{align-items:flex-start;flex-direction:column;}.team-card{gap:18px;padding:22px 20px;}.team-avatar{width:72px;height:72px;}.team-avatar span{font-size:22px;}}
+
 </style>
 </head>
 <body>
@@ -368,6 +436,7 @@
     <div class="nav-links">
       <a href="#beneficios">Benefícios</a>
       <a href="#produto">Produto</a>
+      <a href="#modelos">Modelos 3D</a>
       <a href="#como-funciona">Como funciona</a>
       <a href="#painel">Painel</a>
       <a href="#contato">Contato</a>
@@ -670,6 +739,105 @@
     </div>
   </section>
 
+
+  <div class="divider"></div>
+
+  <section class="pad models-section" id="modelos">
+    <div class="wrap">
+      <div class="models-intro">
+        <div class="sec-head">
+          <div class="eyebrow">engenharia do produto / visualização técnica</div>
+          <h2>Modelos 3D do <span style="color:var(--signal)">SmartPredict.</span></h2>
+          <p>Conheça as bases e tampas desenvolvidas para os conjuntos do projeto. Selecione uma categoria ou clique em uma imagem para ampliar os detalhes das peças.</p>
+        </div>
+        <div class="models-count"><strong>07</strong><span>visualizações técnicas</span></div>
+      </div>
+
+      <div class="model-filters" role="group" aria-label="Filtrar modelos por conjunto">
+        <button class="model-filter" type="button" data-model-filter="all" aria-pressed="true">Todos os modelos</button>
+        <button class="model-filter" type="button" data-model-filter="espe" aria-pressed="false">ESPE</button>
+        <button class="model-filter" type="button" data-model-filter="bme" aria-pressed="false">Sensor de temperatura</button>
+        <button class="model-filter" type="button" data-model-filter="inmp" aria-pressed="false">Sensor de som</button>
+      </div>
+
+      <div class="model-group" data-model-group="espe">
+        <div class="model-group-head"><div><div class="eyebrow">conjunto 01</div><h3>ESPE</h3></div><p>Visualizações da base e da tampa do conjunto ESPE.</p></div>
+        <div class="model-gallery">
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar ESPE base vista 1"><img src="assets/modelos/ESPE_BASE.png" alt="Modelo 3D da base ESPE, vista em perspectiva" loading="lazy"></button><div class="model-card-info"><span class="tag">ESPE / BASE</span><h4>Base — vista 1</h4><p>Visualização externa da estrutura da base.</p></div></article>
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar ESPE base vista 2"><img src="assets/modelos/ESPE_BASE2.png" alt="Modelo 3D da base ESPE, vista interna" loading="lazy"></button><div class="model-card-info"><span class="tag">ESPE / BASE</span><h4>Base — vista 2</h4><p>Vista complementar da parte interna e dos pontos de fixação.</p></div></article>
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar ESPE tampa"><img src="assets/modelos/ESPE_TAMPA.png" alt="Modelo 3D da tampa ESPE" loading="lazy"></button><div class="model-card-info"><span class="tag">ESPE / TAMPA</span><h4>Tampa</h4><p>Peça de fechamento do conjunto ESPE.</p></div></article>
+        </div>
+      </div>
+
+      <div class="model-group" data-model-group="bme">
+        <div class="model-group-head"><div><div class="eyebrow">conjunto 02</div><h3>Sensor de temperatura</h3></div><p>Modelos 3D das peças que compõem o conjunto do sensor de temperatura.</p></div>
+        <div class="model-gallery">
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar base do sensor de temperatura"><img src="assets/modelos/BME_BASE.png" alt="Modelo 3D da base do sensor de temperatura" loading="lazy"></button><div class="model-card-info"><span class="tag">SENSOR DE TEMPERATURA / BASE</span><h4>Base</h4><p>Estrutura principal do conjunto do sensor de temperatura.</p></div></article>
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar tampa do sensor de temperatura"><img src="assets/modelos/BME_TAMPA.png" alt="Modelo 3D da tampa do sensor de temperatura" loading="lazy"></button><div class="model-card-info"><span class="tag">SENSOR DE TEMPERATURA / TAMPA</span><h4>Tampa</h4><p>Peça de fechamento do conjunto do sensor de temperatura.</p></div></article>
+        </div>
+      </div>
+
+      <div class="model-group" data-model-group="inmp">
+        <div class="model-group-head"><div><div class="eyebrow">conjunto 03</div><h3>Sensor de som</h3></div><p>Modelos 3D da base e da tampa do conjunto do sensor de som.</p></div>
+        <div class="model-gallery">
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar base do sensor de som"><img src="assets/modelos/INMP_BASE.png" alt="Modelo 3D da base do sensor de som" loading="lazy"></button><div class="model-card-info"><span class="tag">SENSOR DE SOM / BASE</span><h4>Base</h4><p>Estrutura principal do conjunto do sensor de som.</p></div></article>
+          <article class="model-card"><button class="model-image-button" type="button" aria-label="Ampliar tampa do sensor de som"><img src="assets/modelos/INMP_TAMPA.png" alt="Modelo 3D da tampa do sensor de som" loading="lazy"></button><div class="model-card-info"><span class="tag">SENSOR DE SOM / TAMPA</span><h4>Tampa</h4><p>Peça de fechamento do conjunto do sensor de som.</p></div></article>
+        </div>
+      </div>
+
+      <div class="models-note"><strong>Visualização:</strong> clique em qualquer modelo para ampliar. As imagens são apresentadas em escala proporcional para facilitar a observação das peças.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="pad team-section" id="equipe">
+    <div class="wrap">
+      <div class="team-intro">
+        <div class="sec-head">
+          <div class="eyebrow">quem desenvolveu</div>
+          <h2>Nossa Equipe</h2>
+          <p>As pessoas por trás do SmartPredict, responsáveis por transformar a ideia em um produto de manutenção preditiva.</p>
+        </div>
+        <div class="team-count"><strong>04</strong><span>integrantes</span></div>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"><span>AK</span><i></i></div>
+          <div class="team-body">
+            <span class="team-tag">Membro 01</span>
+            <h3>Anna Karolina Dantas dos Santos</h3>
+            <p>Equipe Predicta / SmartPredict</p>
+          </div>
+        </article>
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"><span>CC</span><i></i></div>
+          <div class="team-body">
+            <span class="team-tag">Membro 02</span>
+            <h3>Christopher Costa</h3>
+            <p>Equipe Predicta / SmartPredict</p>
+          </div>
+        </article>
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"><span>MB</span><i></i></div>
+          <div class="team-body">
+            <span class="team-tag">Membro 03</span>
+            <h3>Matheus Cristhian Papareli Barbosa</h3>
+            <p>Equipe Predicta / SmartPredict</p>
+          </div>
+        </article>
+        <article class="team-card">
+          <div class="team-avatar" aria-hidden="true"><span>TO</span><i></i></div>
+          <div class="team-body">
+            <span class="team-tag">Membro 04</span>
+            <h3>Thaís de Oliveira</h3>
+            <p>Equipe Predicta / SmartPredict</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="pad" id="contato">
     <div class="wrap">
       <div class="cta-sec">
@@ -713,6 +881,7 @@
           <h5>Produto</h5>
           <a href="#beneficios">Benefícios</a>
           <a href="#produto">SmartPredict</a>
+          <a href="#modelos">Modelos 3D</a>
           <a href="#como-funciona">Como funciona</a>
           <a href="#painel">Painel</a>
         </div>
@@ -936,6 +1105,74 @@
     });
   }
 
+</script>
+
+
+<div class="models-lightbox" id="modelsLightbox" role="dialog" aria-modal="true" aria-label="Modelo 3D ampliado">
+  <button class="models-lightbox-close" id="modelsClose" type="button" aria-label="Fechar imagem">×</button>
+  <img id="modelsLargeImage" src="" alt="">
+  <p id="modelsCaption"></p>
+  <div class="models-lightbox-nav">
+    <button id="modelsPrevious" type="button">← Anterior</button>
+    <button id="modelsNext" type="button">Próxima →</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const filters = [...document.querySelectorAll('[data-model-filter]')];
+  const groups = [...document.querySelectorAll('[data-model-group]')];
+  filters.forEach(button => button.addEventListener('click', () => {
+    const selected = button.dataset.modelFilter;
+    filters.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    groups.forEach(group => { group.hidden = selected !== 'all' && group.dataset.modelGroup !== selected; });
+  }));
+
+  const buttons = [...document.querySelectorAll('.model-image-button')];
+  const lightbox = document.getElementById('modelsLightbox');
+  const largeImage = document.getElementById('modelsLargeImage');
+  const caption = document.getElementById('modelsCaption');
+  let current = -1;
+  let previousFocus = null;
+
+  buttons.forEach(button => {
+    const img = button.querySelector('img');
+    img.addEventListener('error', () => button.classList.add('missing'));
+    img.addEventListener('load', () => button.classList.remove('missing'));
+  });
+
+  function show(index) {
+    if (index < 0 || index >= buttons.length || buttons[index].classList.contains('missing')) return;
+    const img = buttons[index].querySelector('img');
+    current = index;
+    largeImage.src = img.src;
+    largeImage.alt = img.alt;
+    caption.textContent = img.alt;
+    document.getElementById('modelsPrevious').disabled = index === 0;
+    document.getElementById('modelsNext').disabled = index === buttons.length - 1;
+    lightbox.classList.add('open');
+    document.getElementById('modelsClose').focus();
+  }
+  function close() {
+    lightbox.classList.remove('open');
+    largeImage.removeAttribute('src');
+    if (previousFocus) previousFocus.focus();
+  }
+  buttons.forEach((button, index) => button.addEventListener('click', () => {
+    previousFocus = button;
+    show(index);
+  }));
+  document.getElementById('modelsClose').addEventListener('click', close);
+  document.getElementById('modelsPrevious').addEventListener('click', () => show(current - 1));
+  document.getElementById('modelsNext').addEventListener('click', () => show(current + 1));
+  lightbox.addEventListener('click', event => { if (event.target === lightbox) close(); });
+  document.addEventListener('keydown', event => {
+    if (!lightbox.classList.contains('open')) return;
+    if (event.key === 'Escape') close();
+    if (event.key === 'ArrowLeft') show(current - 1);
+    if (event.key === 'ArrowRight') show(current + 1);
+  });
+})();
 </script>
 
 </body>
