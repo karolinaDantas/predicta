@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="SmartPredict, da Predicta: manutenção preditiva industrial com IA na borda, sensores de temperatura, vibração, pressão e umidade, alertas em tempo real e processamento embarcado.">
-<title>Predicta | SmartPredict — Inteligência para manutenção preditiva</title>
+<meta name="description" content="SmartPredict, da Predicta: manutenção preditiva industrial com Inteligência Artificial embarcada, telemetria de temperatura, vibração, pressão e umidade e alertas em tempo real.">
+<title>Predicta | SmartPredict — Inteligência Artificial para manutenção preditiva</title>
 <meta name="theme-color" content="#061018">
 <meta property="og:title" content="Predicta | SmartPredict e Modelos 3D">
-<meta property="og:description" content="Monitoramento industrial inteligente com IA para antecipar falhas, reduzir paradas e apoiar decisões de manutenção.">
+<meta property="og:description" content="Monitoramento industrial com Inteligência Artificial na borda para modelar o comportamento operacional, detectar anomalias e evitar paradas não planejadas.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +137,7 @@
   .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center; position:relative; z-index:1;}
   .hero h1{font-size:clamp(34px,4.6vw,54px); line-height:1.08; margin:18px 0 22px;}
   .hero h1 .accent{color:var(--signal);}
-  .hero p.lead{font-size:17px; line-height:1.65; color:var(--paper-dim); max-width:480px; margin-bottom:34px;}
+  .hero p.lead{font-size:17px; line-height:1.65; color:var(--paper-dim); max-width:500px; margin-bottom:34px;}
   .hero-ctas{display:flex; gap:14px; margin-bottom:46px; flex-wrap:wrap;}
   .hero-stats{display:flex; gap:36px;}
   .hero-stats div{border-left:1px solid var(--line); padding-left:14px;}
@@ -242,7 +242,7 @@
     opacity:0; transform:translateY(-10px); max-height:0; overflow:hidden; padding-top:0; padding-bottom:0; border-width:0; margin-bottom:0;
     transition:opacity .35s ease, transform .35s ease, max-height .4s ease, padding .4s ease, margin .4s ease, border-width .4s ease;
   }
-  .toast.show{opacity:1; transform:translateY(0); max-height:100px; padding-top:14px; padding-bottom:14px; border-width:1px; margin-bottom:18px;}
+  .toast.show{opacity:1; transform:translateY(0); max-height:110px; padding-top:14px; padding-bottom:14px; border-width:1px; margin-bottom:18px;}
   .toast .t-icon{width:30px; height:30px; border-radius:8px; background:var(--alert); color:var(--void); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:15px;}
   .toast strong{display:block; font-size:13.5px; margin-bottom:2px;}
   .toast span{font-size:12.5px; color:var(--paper-dim); line-height:1.4;}
@@ -456,20 +456,20 @@
       <div>
         <div class="eyebrow">manutenção preditiva industrial com IA</div>
         <h1>Sua máquina avisa antes de<br><span class="accent">parar de funcionar.</span></h1>
-        <p class="lead">O SmartPredict monitora temperatura, vibração, pressão e umidade em tempo real e usa IA para aprender como a máquina funciona e identificar algo estranho antes que vire parada de produção.</p>
+        <p class="lead">O SmartPredict monitora temperatura, vibração, pressão e umidade em tempo real e aplica Inteligência Artificial embarcada para modelar o comportamento operacional do equipamento, detectando anomalias antes que resultem em parada de produção.</p>
         <div class="hero-ctas">
           <a href="#contato" class="btn btn-primary">Falar com a Predicta</a>
           <a href="#produto" class="btn btn-ghost">Conhecer o SmartPredict</a>
         </div>
         <div class="hero-stats">
           <div><div class="num">5</div><div class="lbl">sensores integrados</div></div>
-          <div><div class="num">24/7</div><div class="lbl">monitoramento contínuo</div></div>
+          <div><div class="num">24/7</div><div class="lbl">inferência contínua</div></div>
           <div><div class="num">&lt;1s</div><div class="lbl">latência de leitura</div></div>
         </div>
       </div>
 
       <div class="hero-visual">
-        <svg class="schematic" viewBox="0 0 460 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama animado: sensores de temperatura, vibração, pressão e umidade enviam dados ao núcleo de IA do SmartPredict, que dispara um alerta">
+        <svg class="schematic" viewBox="0 0 460 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama animado: sensores de temperatura, vibração, pressão e umidade enviam telemetria ao núcleo de Inteligência Artificial do SmartPredict, que dispara um alerta">
           <path class="wire flow" d="M76,40 C150,40 150,120 216,148" />
           <path class="wire flow d2" d="M76,120 C150,120 160,150 216,158" />
           <path class="wire flow d3" d="M76,200 C150,200 160,180 216,172" />
@@ -495,7 +495,7 @@
 
           <g transform="translate(216,110)">
             <rect width="90" height="100" rx="10" class="chip-box"/>
-            <text x="45" y="20" text-anchor="middle" class="chip-title">IA · CORE</text>
+            <text x="45" y="20" text-anchor="middle" class="chip-title">EDGE AI</text>
             <clipPath id="scopeClip"><rect x="10" y="30" width="70" height="34" rx="4"/></clipPath>
             <rect x="10" y="30" width="70" height="34" rx="4" class="scope-bg"/>
             <polyline points="10,48 20,40 30,54 40,36 50,50 60,42 70,56 80,44 90,52" class="scope-wave" clip-path="url(#scopeClip)"/>
@@ -515,10 +515,10 @@
 
   <section class="trust-strip" aria-label="Recursos da plataforma">
     <div class="wrap trust-grid">
-      <div><span class="trust-icon">◉</span><div><strong>Monitoramento contínuo</strong><small>Dados acompanhados em tempo real</small></div></div>
-      <div><span class="trust-icon">↗</span><div><strong>Alertas com IA</strong><small>Aprende o padrão e avisa sobre algo estranho</small></div></div>
-      <div><span class="trust-icon">▣</span><div><strong>Histórico operacional</strong><small>Informação para apoiar decisões</small></div></div>
-      <div><span class="trust-icon">⚙</span><div><strong>IA e processamento local</strong><small>Resposta próxima ao equipamento</small></div></div>
+      <div><span class="trust-icon">◉</span><div><strong>Telemetria contínua</strong><small>Aquisição multissensorial em tempo real</small></div></div>
+      <div><span class="trust-icon">↗</span><div><strong>Detecção de anomalias por IA</strong><small>Aprendizado da linha de base operacional</small></div></div>
+      <div><span class="trust-icon">▣</span><div><strong>Histórico operacional</strong><small>Série temporal para diagnóstico e auditoria</small></div></div>
+      <div><span class="trust-icon">⚙</span><div><strong>Edge AI embarcada</strong><small>Inferência local com baixa latência</small></div></div>
     </div>
   </section>
 
@@ -529,13 +529,13 @@
       <div class="sec-head">
         <div class="eyebrow">por que smartpredict</div>
         <h2>Mais visibilidade para a manutenção. Mais previsibilidade para a operação.</h2>
-        <p>O SmartPredict usa IA para aprender como a máquina funciona e transformar sinais dos equipamentos em informações fáceis de acompanhar, ajudando a equipe a agir antes que algo estranho vire parada.</p>
+        <p>O SmartPredict combina telemetria industrial e modelos de Inteligência Artificial para aprender o regime normal de operação de cada máquina, identificando desvios sutis antes que evoluam para falhas críticas.</p>
       </div>
       <div class="benefit-grid">
         <article class="benefit-card">
           <span class="benefit-number">01</span>
-          <h3>Antecipação com IA</h3>
-          <p>A IA aprende o comportamento da máquina e identifica algo estranho antes de uma falha crítica.</p>
+          <h3>Diagnóstico preditivo</h3>
+          <p>Modelos de IA aprendem a assinatura operacional do ativo e sinalizam desvios comportamentais antes da quebra.</p>
         </article>
         <article class="benefit-card">
           <span class="benefit-number">02</span>
@@ -545,12 +545,12 @@
         <article class="benefit-card">
           <span class="benefit-number">03</span>
           <h3>Rastreabilidade</h3>
-          <p>Mantenha um histórico das leituras para apoiar análises, inspeções e planejamento.</p>
+          <p>Mantenha um histórico estruturado das leituras para apoiar análises de tendência, inspeções e planejamento.</p>
         </article>
         <article class="benefit-card">
           <span class="benefit-number">04</span>
-          <h3>Resposta rápida</h3>
-          <p>Receba notificações quando a IA detectar algo estranho, sem depender de inspeções exclusivamente manuais.</p>
+          <h3>Resposta imediata</h3>
+          <p>Disparo automático de notificações diante de comportamentos anômalos, reduzindo a dependência de rondas manuais.</p>
         </article>
       </div>
     </div>
@@ -564,7 +564,7 @@
       <div class="sec-head">
         <div class="eyebrow">dor e solução</div>
         <h2>Parada não planejada custa mais do que qualquer sensor.</h2>
-        <p>A manutenção corretiva reage depois do problema. A Predicta antecipa com IA.</p>
+        <p>A manutenção corretiva reage depois da falha. A Predicta antecipa com Inteligência Artificial.</p>
       </div>
       <div class="ps-grid">
         <div class="ps-card">
@@ -579,10 +579,10 @@
         <div class="ps-card solucao">
           <h3><span class="dot cyan"></span>A solução SmartPredict</h3>
           <ul>
-            <li>Sensores acoplados à máquina leem temperatura, vibração, pressão e umidade continuamente.</li>
-            <li>A IA aprende como a máquina funciona na borda e envia notificação de algo estranho antes de parar.</li>
-            <li>Histórico de leituras permite identificar tendências e planejar manutenção com antecedência.</li>
-            <li>Painel simples, sem necessidade de equipe HEXAcializada em análise de dados.</li>
+            <li>Sensores acoplados à máquina coletam temperatura, vibração, pressão e umidade continuamente.</li>
+            <li>Algoritmos de IA embarcados aprendem o padrão operacional e notificam anomalias antes da parada.</li>
+            <li>Histórico de leituras permite identificar tendências de degradação e planejar intervenções com antecedência.</li>
+            <li>Interface intuitiva, dispensando equipe dedicada de ciência de dados na operação diária.</li>
           </ul>
         </div>
       </div>
@@ -595,8 +595,8 @@
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">o produto</div>
-        <h2>SmartPredict: um módulo com cinco sentidos e IA para sua máquina.</h2>
-        <p>Um único módulo reúne captação, aprendizado por IA e alerta — pronto para ser instalado direto no painel do equipamento. Passe o mouse nas fichas ao lado para localizar cada sensor na placa.</p>
+        <h2>SmartPredict: cinco sentidos e Inteligência Artificial embarcados na sua máquina.</h2>
+        <p>Um único módulo reúne aquisição de dados, inferência por IA na borda e disparo de alertas — pronto para ser instalado direto no painel do equipamento. Passe o mouse nas fichas ao lado para localizar cada sensor na placa.</p>
       </div>
 
       <div class="product-grid">
@@ -608,7 +608,7 @@
             <circle cx="160" cy="120" r="4" fill="#16c9b0" opacity="0.5" class="cpu-glow"/>
             <circle cx="180" cy="120" r="4" fill="#16c9b0" opacity="0.3" class="cpu-glow"/>
             <rect x="130" y="150" width="150" height="26" rx="4" fill="#13304a" stroke="rgba(139,231,216,0.2)"/>
-            <text x="140" y="167" fill="#8be7d8" font-family="JetBrains Mono" font-size="10">IA · SmartPredict Core</text>
+            <text x="140" y="167" fill="#8be7d8" font-family="JetBrains Mono" font-size="10">AI Core · SmartPredict</text>
             <rect x="130" y="188" width="70" height="70" rx="6" fill="#13304a" stroke="rgba(139,231,216,0.2)"/>
             <rect x="210" y="188" width="70" height="70" rx="6" fill="#13304a" stroke="rgba(139,231,216,0.2)"/>
 
@@ -644,32 +644,32 @@
           <div class="spec-card" data-pins="pin-t1" tabindex="0">
             <div class="tag">Sensor 01</div>
             <h4>Temperatura interna</h4>
-            <p>Medida no núcleo da máquina, perto do ponto crítico de operação — o primeiro sinal de superaquecimento.</p>
+            <p>Medida no núcleo da máquina, perto do ponto crítico de operação — o primeiro indicador térmico de sobrecarga.</p>
           </div>
           <div class="spec-card" data-pins="pin-t2" tabindex="0">
             <div class="tag">Sensor 02</div>
             <h4>Temperatura externa</h4>
-            <p>Medida na carcaça ou no ambiente ao redor — ajuda a IA a distinguir uma falha real de uma variação do clima.</p>
+            <p>Referência térmica ambiental da carcaça — permite ao modelo de IA isolar falhas internas de oscilações climáticas.</p>
           </div>
           <div class="spec-card" data-pins="pin-vib" tabindex="0">
             <div class="tag">Sensor 03</div>
             <h4>Vibração</h4>
-            <p>Detecta desalinhamento, folga ou desgaste de rolamento pela variação do padrão vibracional.</p>
+            <p>Detecta desalinhamento, folga mecânica ou desgaste de rolamentos pela alteração da assinatura vibracional.</p>
           </div>
           <div class="spec-card" data-pins="pin-pres" tabindex="0">
             <div class="tag">Sensor 04</div>
             <h4>Pressão</h4>
-            <p>Acompanha variações que indicam vazamento, entupimento ou sobrecarga no sistema.</p>
+            <p>Acompanha variações que indicam vazamento, obstrução ou sobrepressão no circuito.</p>
           </div>
           <div class="spec-card" data-pins="pin-umid" tabindex="0">
             <div class="tag">Sensor 05</div>
             <h4>Umidade</h4>
-            <p>Monitora condições ambientais que aceleram corrosão e falhas elétricas.</p>
+            <p>Monitora condições ambientais que aceleram oxidação, condensação e falhas elétricas.</p>
           </div>
           <div class="spec-card wide" data-pins="pin-t1,pin-vib,pin-t2,pin-pres,pin-umid" tabindex="0">
-            <div class="tag">Núcleo de IA</div>
-            <h4>Processamento e IA embarcados em Raspberry Pi</h4>
-            <p>A IA aprende como a máquina funciona diretamente na placa, junto do equipamento — sem depender de nuvem para identificar algo estranho e gerar o alerta.</p>
+            <div class="tag">Núcleo · Edge AI</div>
+            <h4>Inferência de IA embarcada em Raspberry Pi</h4>
+            <p>O modelo de Inteligência Artificial aprende a linha de base operacional diretamente no hardware local, identificando desvios e disparando alertas sem depender de conexão contínua com a nuvem.</p>
           </div>
         </div>
       </div>
@@ -682,28 +682,28 @@
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">como funciona</div>
-        <h2>Da leitura do sensor ao alerta com IA, em quatro etapas.</h2>
+        <h2>Da aquisição multissensorial ao alerta preditivo, em quatro etapas.</h2>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-num">01</div>
-          <h4>Coleta</h4>
-          <p>Os cinco sensores registram temperatura, vibração, pressão e umidade continuamente.</p>
+          <h4>Aquisição</h4>
+          <p>Os cinco sensores capturam telemetria contínua de temperatura, vibração, pressão e umidade.</p>
         </div>
         <div class="step">
           <div class="step-num">02</div>
-          <h4>Aprendizado com IA</h4>
-          <p>A IA processa os dados localmente e aprende como a máquina funciona no seu dia a dia.</p>
+          <h4>Modelagem por IA</h4>
+          <p>O algoritmo embarcado processa os sinais localmente e aprende o regime normal de operação da máquina.</p>
         </div>
         <div class="step">
           <div class="step-num">03</div>
-          <h4>Detecção</h4>
-          <p>Quando a IA identifica algo estranho fora do funcionamento normal, o sinal é destacado antes da máquina parar.</p>
+          <h4>Detecção de anomalia</h4>
+          <p>Desvios em relação ao padrão aprendido são classificados como indícios precoces de falha antes da parada.</p>
         </div>
         <div class="step">
           <div class="step-num">04</div>
-          <h4>Alerta</h4>
-          <p>A equipe de manutenção recebe a notificação tanto no painel quanto no aplicativo ntfy, garantindo tempo para agir antes da parada.</p>
+          <h4>Notificação</h4>
+          <p>A equipe de manutenção recebe o alerta imediato no painel e via aplicativo ntfy para intervir de forma planejada.</p>
         </div>
       </div>
     </div>
@@ -716,7 +716,7 @@
       <div class="sec-head">
         <div class="eyebrow">painel de monitoramento</div>
         <h2>Assim como seria o painel da sua máquina agora.</h2>
-        <p>Simulação com valores ilustrativos — no SmartPredict real, esses números alimentam a IA direto dos sensores. Use o botão abaixo para simular um pico e ver o alerta em ação.</p>
+        <p>Simulação com valores ilustrativos — no SmartPredict real, essa telemetria alimenta o modelo de IA em tempo real. Use o botão abaixo para simular uma anomalia e observar o diagnóstico em ação.</p>
       </div>
 
       <div class="dashboard">
@@ -730,8 +730,8 @@
         <div class="toast" id="toast" role="status" aria-live="polite">
           <div class="t-icon">!</div>
           <div>
-            <strong>Alerta enviado pela IA</strong>
-            <span>Algo estranho detectado na Máquina 04 (vibração acima do padrão aprendido) — notificação enviada à equipe de manutenção via aplicativo ntfy antes de parar.</span>
+            <strong>Anomalia detectada pelo modelo de IA</strong>
+            <span>Desvio vibracional acima da linha de base na Máquina 04 — notificação preditiva enviada à equipe de manutenção via aplicativo ntfy.</span>
           </div>
         </div>
         <div class="sensor-grid" id="sensorGrid"></div>
@@ -797,7 +797,7 @@
         <div class="sec-head">
           <div class="eyebrow">quem desenvolveu</div>
           <h2>Nossa Equipe</h2>
-          <p>As pessoas por trás do SmartPredict, responsáveis por transformar a ideia em um produto de manutenção preditiva com IA.</p>
+          <p>Os profissionais responsáveis por conceber, modelar e desenvolver o SmartPredict — integrando hardware, modelos de Inteligência Artificial e engenharia de produto.</p>
         </div>
         <div class="team-count"><strong>04</strong><span>integrantes</span></div>
       </div>
@@ -874,7 +874,7 @@
           </svg>
           <span>PREDICTA</span>
         </div>
-        <p class="small">Manutenção preditiva com IA para operações que não podem parar. SmartPredict: sensores, IA e alerta em uma única placa.</p>
+        <p class="small">Manutenção preditiva com Inteligência Artificial para operações contínuas. SmartPredict: sensores, Edge AI e alertas em um único módulo.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
@@ -894,7 +894,7 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="currentYear">2026</span> Predicta. Todos os direitos reservados.</span>
-      <span>SmartPredict — IA, processamento e sensores industriais</span>
+      <span>SmartPredict — Edge AI e telemetria industrial</span>
     </div>
   </div>
 </footer>
@@ -1021,14 +1021,14 @@
 
     if (anyWarn){
       statusBadge.classList.add('warn');
-      statusText.textContent = 'IA: algo estranho detectado';
+      statusText.textContent = 'IA: anomalia detectada';
       showToast();
     } else {
       statusBadge.classList.remove('warn');
       statusText.textContent = 'Operação normal';
     }
     document.querySelectorAll('.tick-status').forEach(el => {
-      el.textContent = anyWarn ? 'alerta IA' : 'operação normal';
+      el.textContent = anyWarn ? 'anomalia detectada (IA)' : 'operação normal';
     });
   }
 
