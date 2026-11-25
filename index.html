@@ -86,7 +86,7 @@
 
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(13,3,3,0.86);
+    background:rgba(13,3,3,0.92);
     backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
     padding-top:var(--safe-t);
@@ -119,25 +119,24 @@
   .btn:disabled{opacity:0.45; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
   .nav .btn{padding:9px 18px;font-size:13.5px;}
 
-  .ticker-bar{overflow:hidden; border-top:1px solid var(--line);}
+  .ticker-bar{overflow:hidden; border-top:1px solid var(--line); width:100%; position:relative;}
   .ticker-mask{-webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent); mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);}
-  .ticker-track{display:flex; width:max-content; gap:46px; padding:8px 0; animation:tickerScroll 34s linear infinite;}
-  .ticker-bar:hover .ticker-track{animation-play-state:paused;}
-  @keyframes tickerScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
-  .ticker-item{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--paper-dim); white-space:nowrap; display:flex; gap:7px; align-items:center;}
+  .ticker-track{display:inline-flex; align-items:center; padding:8px 0; will-change:transform;}
+  .ticker-group{display:inline-flex; align-items:center; gap:28px; padding-right:28px; flex-shrink:0;}
+  .ticker-item{font-family:'JetBrains Mono'; font-size:11.5px; color:var(--paper-dim); white-space:nowrap; flex-shrink:0; display:inline-flex; gap:7px; align-items:center;}
   .ticker-item b{color:var(--signal-soft); font-weight:600;}
-  .ticker-item b.warn-text{color:var(--alert);}
+  .ticker-item b.warn-text{color:var(--alert) !important;}
   .ticker-item .sep{color:var(--wire);}
 
   .hero{
     padding:calc(190px + var(--safe-t)) 0 108px;
     background:
-      radial-gradient(ellipse 900px 520px at var(--mx,82%) var(--my,8%), rgba(220,38,38,0.18), transparent 60%),
+      radial-gradient(ellipse 900px 540px at var(--mx,82%) var(--my,8%), rgba(220,38,38,0.28), transparent 60%),
       radial-gradient(ellipse 700px 500px at -5% 90%, rgba(61,15,15,0.62), transparent 60%),
       var(--deep);
     overflow:hidden;
   }
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center; position:relative; z-index:1;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center; position:relative; z-index:2;}
   .hero h1{font-size:clamp(34px,4.6vw,54px); line-height:1.08; margin:18px 0 22px; color:var(--paper);}
   .hero h1 .accent{color:var(--signal);}
   .hero p.lead{font-size:17px; line-height:1.65; color:var(--paper-dim); max-width:500px; margin-bottom:34px;}
@@ -149,34 +148,32 @@
 
   .hero-visual{position:relative; height:400px;}
   .schematic{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
-  .wire{fill:none; stroke:var(--wire); stroke-width:2; stroke-linecap:round; stroke-dasharray:5 9;}
-  .wire.flow{animation:flow 3.4s linear infinite;}
-  .wire.flow.d2{animation-delay:-0.85s;}
-  .wire.flow.d3{animation-delay:-1.7s;}
-  .wire.flow.d4{animation-delay:-2.55s;}
-  @keyframes flow{to{stroke-dashoffset:-140;}}
+  .wire{fill:none; stroke:var(--wire); stroke-width:2; stroke-linecap:round; stroke-dasharray:7 11;}
+  .wire.flow{animation:flow 2.2s linear infinite;}
+  .wire.flow.d2{animation-delay:-0.55s;}
+  .wire.flow.d3{animation-delay:-1.1s;}
+  .wire.flow.d4{animation-delay:-1.65s;}
+  @keyframes flow{from{stroke-dashoffset:0;} to{stroke-dashoffset:-36;}}
 
-  .node-ring{fill:none; stroke:var(--signal); stroke-width:1.6; opacity:0.62; transform-box:fill-box; transform-origin:center; animation:ringPulse 4.2s ease-out infinite;}
+  .flow-packet{fill:var(--signal-soft); filter:drop-shadow(0 0 5px rgba(255,118,107,0.85));}
+  .flow-packet.alert-pkt{fill:var(--alert); filter:drop-shadow(0 0 6px rgba(245,158,11,0.9));}
+
+  .node-ring{fill:none; stroke:var(--signal); stroke-width:1.6; opacity:0.65;}
   .node-dot{fill:var(--signal-soft);}
-  .node.n2 .node-ring{animation-delay:1.05s;}
-  .node.n3 .node-ring{animation-delay:2.1s;}
-  .node.n4 .node-ring{animation-delay:3.15s;}
-  @keyframes ringPulse{0%{opacity:.58; transform:scale(1);} 75%{opacity:0; transform:scale(2.1);} 100%{opacity:0; transform:scale(2.1);}}
   .node-label{font-family:'JetBrains Mono'; font-size:9.5px; fill:var(--paper-dim); letter-spacing:.02em;}
 
   .chip-box{fill:var(--panel-2); stroke:var(--wire); stroke-width:1.4;}
   .chip-title{font-family:'JetBrains Mono'; font-size:10px; fill:var(--signal-soft); letter-spacing:.06em;}
   .chip-sub{font-family:'JetBrains Mono'; font-size:8px; fill:var(--paper-dim);}
-  .scope-bg{fill:rgba(11,3,3,0.68);}
-  .scope-wave{stroke:var(--signal); stroke-width:1.3; fill:none; opacity:.9;}
-  .scope-sweep{fill:var(--signal-dim); animation:sweep 3s linear infinite;}
-  @keyframes sweep{0%{transform:translateX(0);} 100%{transform:translateX(64px);}}
+  .scope-bg{fill:rgba(11,3,3,0.78);}
+  .scope-wave{stroke:var(--signal); stroke-width:1.5; fill:none; opacity:.95;}
+  .scope-sweep{fill:rgba(255,118,107,0.22); animation:sweep 2.2s linear infinite;}
+  @keyframes sweep{0%{transform:translateX(-14px);} 100%{transform:translateX(84px);}}
 
-  .alert-ring{fill:none; stroke:var(--alert); stroke-width:1.6; opacity:.5; transform-box:fill-box; transform-origin:center; animation:ringPulse 5s ease-out infinite; animation-delay:1.2s;}
-  .alert-bell{fill:var(--alert); opacity:.85;}
-  #node-alert.armed .alert-ring{stroke:var(--alert); animation:alertFlash .5s ease-in-out 4;}
-  #node-alert.armed .alert-bell{fill:var(--alert); filter:drop-shadow(0 0 6px rgba(245,158,11,0.75));}
-  @keyframes alertFlash{0%,100%{opacity:.4; transform:scale(1);} 50%{opacity:1; transform:scale(1.3);}}
+  .alert-ring{fill:none; stroke:var(--alert); stroke-width:1.6; opacity:.55;}
+  .alert-bell{fill:var(--alert); opacity:.9;}
+  #node-alert.armed .alert-ring{stroke:var(--alert); stroke-width:2.4;}
+  #node-alert.armed .alert-bell{filter:drop-shadow(0 0 8px rgba(245,158,11,0.95));}
 
   .sec-head{max-width:640px; margin-bottom:56px; position:relative; z-index:1;}
   .sec-head h2{font-size:clamp(26px,3.2vw,36px); margin-top:14px; line-height:1.18; color:var(--paper);}
@@ -532,7 +529,7 @@
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
     <a href="#contato" class="btn btn-primary nav-demo">Solicitar demonstração</a>
   </nav>
-  <div class="ticker-bar ticker-mask">
+  <div class="ticker-bar ticker-mask" id="tickerBar">
     <div class="ticker-track" id="tickerTrack"></div>
   </div>
 </header>
@@ -557,42 +554,85 @@
       </div>
 
       <div class="hero-visual">
-        <svg class="schematic" viewBox="0 0 460 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama animado: sensores de temperatura, vibração, pressão e umidade enviam telemetria ao núcleo de Inteligência Artificial do SmartPredict, que dispara um alerta">
-          <path class="wire flow" d="M76,40 C150,40 150,120 216,148" />
-          <path class="wire flow d2" d="M76,120 C150,120 160,150 216,158" />
-          <path class="wire flow d3" d="M76,200 C150,200 160,180 216,172" />
-          <path class="wire flow d4" d="M76,280 C150,280 160,220 216,182" />
-          <path class="wire flow" d="M306,160 C360,160 370,160 404,160" />
+        <svg class="schematic" id="heroSchematic" viewBox="0 0 460 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagrama animado: sensores de temperatura, vibração, pressão e umidade enviam telemetria ao núcleo de Inteligência Artificial do SmartPredict, que dispara um alerta">
+          <defs>
+            <path id="path-temp" d="M76,40 C150,40 150,120 216,148" />
+            <path id="path-vibr" d="M76,120 C150,120 160,150 216,158" />
+            <path id="path-pres" d="M76,200 C150,200 160,180 216,172" />
+            <path id="path-umid" d="M76,280 C150,280 160,220 216,182" />
+            <path id="path-out"  d="M306,160 C360,160 370,160 404,160" />
+            <clipPath id="scopeClip"><rect x="10" y="30" width="70" height="34" rx="4"/></clipPath>
+          </defs>
+
+          <use href="#path-temp" class="wire flow" />
+          <use href="#path-vibr" class="wire flow d2" />
+          <use href="#path-pres" class="wire flow d3" />
+          <use href="#path-umid" class="wire flow d4" />
+          <use href="#path-out"  class="wire flow" id="outWire" />
+
+          <circle r="3" class="flow-packet">
+            <animateMotion dur="2.1s" repeatCount="indefinite" begin="0s"><mpath href="#path-temp"/></animateMotion>
+          </circle>
+          <circle r="3" class="flow-packet">
+            <animateMotion dur="2.1s" repeatCount="indefinite" begin="0.5s"><mpath href="#path-vibr"/></animateMotion>
+          </circle>
+          <circle r="3" class="flow-packet">
+            <animateMotion dur="2.1s" repeatCount="indefinite" begin="1.0s"><mpath href="#path-pres"/></animateMotion>
+          </circle>
+          <circle r="3" class="flow-packet">
+            <animateMotion dur="2.1s" repeatCount="indefinite" begin="1.5s"><mpath href="#path-umid"/></animateMotion>
+          </circle>
+          <circle r="3.3" class="flow-packet alert-pkt">
+            <animateMotion dur="1.4s" repeatCount="indefinite" begin="0.2s"><mpath href="#path-out"/></animateMotion>
+          </circle>
 
           <g class="node n1" transform="translate(58,40)">
-            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
-            <text x="0" y="32" text-anchor="middle" class="node-label">TEMP</text>
+            <circle r="6" class="node-ring">
+              <animate attributeName="r" from="6" to="16" dur="2.4s" begin="0s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="2.4s" begin="0s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="5" class="node-dot"/>
+            <text x="0" y="30" text-anchor="middle" class="node-label">TEMP</text>
           </g>
           <g class="node n2" transform="translate(58,120)">
-            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
-            <text x="0" y="32" text-anchor="middle" class="node-label">VIBR</text>
+            <circle r="6" class="node-ring">
+              <animate attributeName="r" from="6" to="16" dur="2.4s" begin="0.6s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="2.4s" begin="0.6s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="5" class="node-dot"/>
+            <text x="0" y="30" text-anchor="middle" class="node-label">VIBR</text>
           </g>
           <g class="node n3" transform="translate(58,200)">
-            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
-            <text x="0" y="32" text-anchor="middle" class="node-label">PRES</text>
+            <circle r="6" class="node-ring">
+              <animate attributeName="r" from="6" to="16" dur="2.4s" begin="1.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="2.4s" begin="1.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="5" class="node-dot"/>
+            <text x="0" y="30" text-anchor="middle" class="node-label">PRES</text>
           </g>
           <g class="node n4" transform="translate(58,280)">
-            <circle r="15" class="node-ring"/><circle r="5" class="node-dot"/>
-            <text x="0" y="32" text-anchor="middle" class="node-label">UMID</text>
+            <circle r="6" class="node-ring">
+              <animate attributeName="r" from="6" to="16" dur="2.4s" begin="1.8s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.7" to="0" dur="2.4s" begin="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="5" class="node-dot"/>
+            <text x="0" y="30" text-anchor="middle" class="node-label">UMID</text>
           </g>
 
           <g transform="translate(216,110)">
             <rect width="90" height="100" rx="10" class="chip-box"/>
             <text x="45" y="20" text-anchor="middle" class="chip-title">EDGE AI</text>
-            <clipPath id="scopeClip"><rect x="10" y="30" width="70" height="34" rx="4"/></clipPath>
             <rect x="10" y="30" width="70" height="34" rx="4" class="scope-bg"/>
-            <polyline points="10,48 20,40 30,54 40,36 50,50 60,42 70,56 80,44 90,52" class="scope-wave" clip-path="url(#scopeClip)"/>
-            <rect x="10" y="30" width="6" height="34" class="scope-sweep" clip-path="url(#scopeClip)"/>
+            <polyline id="heroScopeWave" points="10,48 20,40 30,54 40,36 50,50 60,42 70,56 80,44 90,52" class="scope-wave" clip-path="url(#scopeClip)"/>
+            <rect x="10" y="30" width="12" height="34" class="scope-sweep" clip-path="url(#scopeClip)"/>
             <text x="45" y="80" text-anchor="middle" class="chip-sub">raspberry pi</text>
           </g>
 
           <g id="node-alert" transform="translate(420,160)">
-            <circle r="17" class="alert-ring"/>
+            <circle r="10" class="alert-ring">
+              <animate attributeName="r" from="10" to="20" dur="2.6s" begin="0.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.65" to="0" dur="2.6s" begin="0.4s" repeatCount="indefinite"/>
+            </circle>
             <path d="M-4,-5 a4,4 0 0 1 8,0 v5 l3,4 h-14 l3,-4 z" class="alert-bell"/>
             <circle cx="0" cy="6" r="1.6" class="alert-bell"/>
           </g>
@@ -702,27 +742,27 @@
             <g class="pin" id="pin-t1">
               <line class="pin-line" x1="90" y1="140" x2="30" y2="90"/>
               <circle class="pin-dot" cx="30" cy="90" r="4"/>
-              <text class="pin-label" x="6" y="76">INT</text>
+              <text x="6" y="76">INT</text>
             </g>
             <g class="pin" id="pin-vib">
               <line class="pin-line" x1="90" y1="200" x2="24" y2="200"/>
               <circle class="pin-dot" cx="24" cy="200" r="4"/>
-              <text class="pin-label" x="2" y="192">VIBR</text>
+              <text x="2" y="192">VIBR</text>
             </g>
             <g class="pin" id="pin-t2">
               <line class="pin-line" x1="90" y1="260" x2="30" y2="300"/>
               <circle class="pin-dot" cx="30" cy="300" r="4"/>
-              <text class="pin-label" x="8" y="322">EXT</text>
+              <text x="8" y="322">EXT</text>
             </g>
             <g class="pin" id="pin-pres">
               <line class="pin-line" x1="330" y1="140" x2="394" y2="90"/>
               <circle class="pin-dot" cx="394" cy="90" r="4"/>
-              <text class="pin-label" x="374" y="76">PRES</text>
+              <text x="374" y="76">PRES</text>
             </g>
             <g class="pin" id="pin-umid">
               <line class="pin-line" x1="330" y1="220" x2="398" y2="220"/>
               <circle class="pin-dot" cx="398" cy="220" r="4"/>
-              <text class="pin-label" x="374" y="240">UMID</text>
+              <text x="374" y="240">UMID</text>
             </g>
           </svg>
         </div>
@@ -1074,9 +1114,10 @@
   function step(s){
     const range = s.max - s.min;
     if (spike && spike.key === s.key && Date.now() < spike.until){
-      s.value += (spike.target - s.value) * 0.35;
+      s.value = spike.target + (Math.random() - 0.5) * 0.004;
     } else {
-      const delta = (Math.random() - 0.5) * range * 0.06;
+      if (spike && Date.now() >= spike.until) spike = null;
+      const delta = (Math.random() - 0.5) * range * 0.05;
       s.value = Math.min(s.max, Math.max(s.min, s.value + delta));
     }
     s.value = Math.min(s.max, Math.max(s.min, s.value));
@@ -1092,31 +1133,48 @@
     }).join(' ');
   }
 
+  const tickerBar = document.getElementById('tickerBar');
   const tickerTrack = document.getElementById('tickerTrack');
-  function tickerRow(){
-    const frag = document.createDocumentFragment();
+  function buildTickerGroup(){
+    const grp = document.createElement('div');
+    grp.className = 'ticker-group';
     sensors.forEach(s => {
       const el = document.createElement('span');
       el.className = 'ticker-item';
       el.innerHTML = `<b class="tick-${s.key}">${s.value.toFixed(s.decimals)}${s.unit}</b>${s.label}`;
-      frag.appendChild(el);
+      grp.appendChild(el);
       const sep = document.createElement('span');
       sep.className = 'ticker-item sep';
       sep.textContent = '/';
-      frag.appendChild(sep);
+      grp.appendChild(sep);
     });
     const statusEl = document.createElement('span');
     statusEl.className = 'ticker-item';
     statusEl.innerHTML = 'Status <b class="tick-status">operação normal</b>';
-    frag.appendChild(statusEl);
-    const sep2 = document.createElement('span');
-    sep2.className = 'ticker-item sep';
-    sep2.textContent = '/';
-    frag.appendChild(sep2);
-    return frag;
+    grp.appendChild(statusEl);
+    return grp;
   }
-  tickerTrack.appendChild(tickerRow());
-  tickerTrack.appendChild(tickerRow());
+  for (let i = 0; i < 4; i++) tickerTrack.appendChild(buildTickerGroup());
+
+  let tickerPos = 0;
+  let tickerPaused = false;
+  let lastTickerTime = performance.now();
+  tickerBar?.addEventListener('mouseenter', () => { tickerPaused = true; });
+  tickerBar?.addEventListener('mouseleave', () => { tickerPaused = false; lastTickerTime = performance.now(); });
+
+  function animateTicker(now){
+    const dt = Math.min(0.1, (now - lastTickerTime) / 1000);
+    lastTickerTime = now;
+    const firstGroup = tickerTrack.firstElementChild;
+    const loopWidth = firstGroup ? firstGroup.getBoundingClientRect().width : 0;
+    if (!tickerPaused && loopWidth > 0){
+      tickerPos += 46 * dt;
+      if (tickerPos >= loopWidth) tickerPos -= loopWidth;
+      tickerTrack.style.transform = `translateX(${-tickerPos}px)`;
+    }
+    requestAnimationFrame(animateTicker);
+  }
+  requestAnimationFrame(animateTicker);
 
   const grid = document.getElementById('sensorGrid');
   function makeCard(s){
@@ -1140,26 +1198,24 @@
   const alertNode = document.getElementById('node-alert');
   const healthScoreEl = document.getElementById('healthScore');
   const anomalyScoreEl = document.getElementById('anomalyScore');
-  let toastCooldown = false;
+  let toastTimeout = null;
 
-  function showToast(){
-    if (toastCooldown) return;
-    toastCooldown = true;
+  function triggerAlertBanner(){
     toast.classList.add('show');
     if (alertNode){
       alertNode.classList.add('armed');
       setTimeout(() => alertNode.classList.remove('armed'), 2200);
     }
-    setTimeout(() => {
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
       toast.classList.remove('show');
-      setTimeout(() => { toastCooldown = false; }, 4000);
-    }, 4500);
+    }, 5000);
   }
 
   function tick(){
     cycleCounter++;
     if (autoCycle && !spike && cycleCounter % 8 === 0){
-      spike = { key:'vib', target:0.085, until: Date.now() + 4500 };
+      spike = { key:'vib', target:0.085, until: Date.now() + 5400 };
     }
 
     let anyWarn = false;
@@ -1201,7 +1257,7 @@
     if (anyWarn){
       statusBadge.classList.add('warn');
       statusText.textContent = 'IA: anomalia detectada';
-      showToast();
+      triggerAlertBanner();
     } else {
       statusBadge.classList.remove('warn');
       statusText.textContent = 'Operação normal';
@@ -1212,16 +1268,39 @@
     });
   }
 
+  const heroScopeWave = document.getElementById('heroScopeWave');
+  const outWire = document.getElementById('outWire');
+  if (heroScopeWave) {
+    let phase = 0;
+    setInterval(() => {
+      phase += 0.45;
+      const isAlert = statusBadge?.classList.contains('warn');
+      const amp = isAlert ? 11 : 6.5;
+      const pts = [];
+      for (let x = 10; x <= 90; x += 10) {
+        const y = 47 + Math.sin(x * 0.14 + phase) * amp + Math.cos(x * 0.27 - phase * 0.7) * (amp * 0.4);
+        pts.push(`${x},${y.toFixed(1)}`);
+      }
+      heroScopeWave.setAttribute('points', pts.join(' '));
+      heroScopeWave.style.stroke = isAlert ? 'var(--alert)' : 'var(--signal)';
+      if (outWire) {
+        outWire.style.stroke = isAlert ? 'var(--alert)' : 'var(--wire)';
+        outWire.style.strokeWidth = isAlert ? '2.5' : '2';
+      }
+    }, 90);
+  }
+
   sensors.forEach(s => { for (let i=0;i<12;i++) step(s); });
   tick();
-  setInterval(tick, reduceMotion ? 4000 : 1800);
+  setInterval(tick, 1800);
 
   const simulateBtn = document.getElementById('simulateBtn');
   simulateBtn.addEventListener('click', () => {
     simulateBtn.disabled = true;
-    spike = { key:'vib', target:0.085, until: Date.now() + 5000 };
-    setTimeout(() => { spike = null; }, 5000);
-    setTimeout(() => { simulateBtn.disabled = false; }, 9000);
+    spike = { key:'vib', target:0.085, until: Date.now() + 5400 };
+    tick();
+    setTimeout(() => { spike = null; }, 5400);
+    setTimeout(() => { simulateBtn.disabled = false; }, 6000);
   });
 
   const autoDemoBtn = document.getElementById('autoDemoBtn');
@@ -1243,7 +1322,7 @@
     card.addEventListener('blur', deactivate);
   });
 
-  if (!reduceMotion && window.matchMedia('(pointer:fine)').matches){
+  if (window.matchMedia('(pointer:fine)').matches){
     const hero = document.getElementById('heroSection');
     hero.addEventListener('mousemove', (e) => {
       const r = hero.getBoundingClientRect();
@@ -1357,10 +1436,8 @@
   const FRONT_Z     = APOTHEM_IN + WALL_THICK * 0.5;
   const SIDE_LEN    = R_OUT;
 
-  // 1. Caixa Hexagonal em 2 andares
   const caixaGrp = new THREE.Group();
 
-  // Piso inferior
   const floorGeo = new THREE.ExtrudeGeometry(hexAlignedShape(R_OUT), { depth: 0.14, bevelEnabled: false });
   floorGeo.rotateX(-Math.PI / 2);
   const floorMesh = new THREE.Mesh(floorGeo, makeMat(0xcbd5dc));
@@ -1368,7 +1445,6 @@
   wireOverlay(floorMesh);
   caixaGrp.add(floorMesh);
 
-  // Piso intermediário ("chão" separando o andar inferior da gaveta e o andar superior)
   const midFloorGeo = new THREE.ExtrudeGeometry(hexAlignedShape(R_IN + 0.02), { depth: 0.08, bevelEnabled: false });
   midFloorGeo.rotateX(-Math.PI / 2);
   const midFloorMesh = new THREE.Mesh(midFloorGeo, makeMat(0xc3cfd6));
@@ -1425,7 +1501,6 @@
     caixaGrp.add(faceGrp);
   }
 
-  // 6 colunas/bossos nos vértices do hexágono
   for (let i = 0; i < 6; i++){
     const a = (Math.PI / 3) * i + Math.PI / 6;
     const bx = Math.sin(a) * 1.12;
@@ -1438,7 +1513,6 @@
     caixaGrp.add(boss, hole);
   }
 
-  // 4 pinos/bossos internos bem separados: 2 em um canto e 2 no outro canto
   const innerPins = [
     [-0.58, -0.34],
     [-0.58,  0.34],
@@ -1455,7 +1529,6 @@
   }
   assembly.add(caixaGrp);
 
-  // 2. Gaveta sem fundo, com laterais unidas diretamente à frente
   const gavetaGrp = new THREE.Group();
   const DRAWER_Y = -0.32;
   const wallH = 0.28;
@@ -1488,7 +1561,6 @@
   gavetaGrp.add(sideL, sideR, backWall, drawerFace, drawerLip);
   assembly.add(gavetaGrp);
 
-  // 3. Tampa Superior Hexagonal alinhada ao eixo do conjunto, com 5 fendas retas e 6 anéis nos vértices
   const tampaGrp = new THREE.Group();
   const lidShape = hexAlignedShape(R_OUT);
   for (let i = -2; i <= 2; i++){
@@ -1519,7 +1591,6 @@
   }
   assembly.add(tampaGrp);
 
-  // Linhas de eixo técnico de explosão
   function makeAxisLine(p1, p2, hex){
     const geo = new THREE.BufferGeometry().setFromPoints([
       new THREE.Vector3(...p1),
@@ -1681,7 +1752,8 @@
 
   const spinBtn = document.getElementById('expSpinBtn');
   if (spinBtn){
-    spinBtn.addEventListener('click', () => {
+    spinBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       autoSpin = !autoSpin;
       spinBtn.classList.toggle('active', autoSpin);
     });
@@ -1703,8 +1775,6 @@
 
   let down = false, moved = false, px = 0, py = 0;
   mount.addEventListener('pointerdown', e => {
-    autoSpin = false;
-    spinBtn?.classList.remove('active');
     down = true; moved = false; px = e.clientX; py = e.clientY;
   });
   window.addEventListener('pointerup', e => {
@@ -1730,7 +1800,11 @@
       return;
     }
     const dx = e.clientX - px, dy = e.clientY - py;
-    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+      moved = true;
+      autoSpin = false;
+      spinBtn?.classList.remove('active');
+    }
     px = e.clientX; py = e.clientY;
     sph.yaw -= dx * 0.008;
     sph.pitch = Math.max(0.15, Math.min(Math.PI - 0.15, sph.pitch - dy * 0.008));
@@ -1758,8 +1832,8 @@
         pt.grp.position.set(pt.exp[0] * expNow, pt.exp[1] * expNow, pt.exp[2] * expNow);
       });
     }
-    if (autoSpin && !down && !reduceMotion){
-      sph.yaw += 0.0025;
+    if (autoSpin && !down){
+      sph.yaw += 0.004;
       syncCam();
     }
     renderer.render(scene, camera);
@@ -1847,7 +1921,7 @@
   const st = document.createElement('style');
   st.textContent = `
   .fx-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:210;background:var(--signal);transform-origin:0 50%;transform:scaleX(0);pointer-events:none;box-shadow:0 0 12px var(--signal)}
-  #fxMesh{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  #fxMesh{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
   .fx-glow{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;
     background:radial-gradient(260px circle at var(--gx,50%) var(--gy,50%),rgba(220,38,38,.2),transparent 65%)}
   .fx-spot:hover>.fx-glow{opacity:1}
@@ -1901,43 +1975,53 @@
       W = hero.clientWidth; H = hero.clientHeight;
       cv.width = W * dpr; cv.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(70, W / 20));
+      const n = Math.round(Math.min(80, Math.max(24, W / 18)));
       nodes = Array.from({ length: n }, () => ({
         x: Math.random() * W, y: Math.random() * H,
-        vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22
+        vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35
       }));
     };
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
-      const LINK = 130;
+      const LINK = 145;
+      if (mouse.x > 0 && mouse.y > 0) {
+        const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 190);
+        g.addColorStop(0, 'rgba(220,38,38,0.18)');
+        g.addColorStop(1, 'rgba(220,38,38,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 190, 0, Math.PI * 2);
+        ctx.fill();
+      }
       for (let i = 0; i < nodes.length; i++) {
         const a = nodes[i];
-        if (!reduce) {
-          a.x += a.vx; a.y += a.vy;
-          if (a.x < 0 || a.x > W) a.vx *= -1;
-          if (a.y < 0 || a.y > H) a.vy *= -1;
-        }
+        a.x += a.vx; a.y += a.vy;
+        if (a.x < 0 || a.x > W) a.vx *= -1;
+        if (a.y < 0 || a.y > H) a.vy *= -1;
         const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-        ctx.fillStyle = dm < 160 ? 'rgba(255,118,107,.95)' : 'rgba(220,38,38,.52)';
-        ctx.beginPath(); ctx.arc(a.x, a.y, dm < 160 ? 2.4 : 1.6, 0, 6.283); ctx.fill();
+        ctx.fillStyle = dm < 170 ? 'rgba(255,118,107,0.98)' : 'rgba(220,38,38,0.58)';
+        ctx.beginPath(); ctx.arc(a.x, a.y, dm < 170 ? 2.8 : 1.7, 0, 6.283); ctx.fill();
         for (let j = i + 1; j < nodes.length; j++) {
           const b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK) {
-            const near = dm < 160 || Math.hypot(b.x - mouse.x, b.y - mouse.y) < 160;
-            ctx.strokeStyle = `rgba(220,38,38,${(1 - d / LINK) * (near ? .56 : .22)})`;
-            ctx.lineWidth = 1;
+            const near = dm < 170 || Math.hypot(b.x - mouse.x, b.y - mouse.y) < 170;
+            ctx.strokeStyle = `rgba(220,38,38,${(1 - d / LINK) * (near ? 0.68 : 0.25)})`;
+            ctx.lineWidth = near ? 1.3 : 1;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
       }
     };
-    const loop = () => { if (visible && !document.hidden) draw(); if (!reduce) requestAnimationFrame(loop); };
+    const loop = () => { if (visible && !document.hidden) draw(); requestAnimationFrame(loop); };
     build(); draw();
-    if (!reduce) loop();
+    loop();
     new ResizeObserver(() => { build(); draw(); }).observe(hero);
     new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(hero);
     hero.addEventListener('pointermove', e => {
-      const r = hero.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+      const r = hero.getBoundingClientRect();
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     }, { passive: true });
     hero.addEventListener('pointerleave', () => { mouse = { x: -999, y: -999 }; });
   }
@@ -1969,7 +2053,7 @@
     const BAND = .25;
     const frame = ts => {
       requestAnimationFrame(frame);
-      if (document.hidden || ts - last < (reduce ? 160 : 33)) return;
+      if (document.hidden || ts - last < 33) return;
       last = ts; t += .2;
       const v = parseFloat(($('#val-vib')?.textContent || '0.021').replace(',', '.')) || .021;
       const a = v / .09;
